@@ -1,10 +1,13 @@
 'use strict'
 
 /* eslint-env mocha */
-const commitMessageInstall = require('.')
+const { getMessage } = require('.')
+const schemaShot = require('schema-shot')
 
 describe('commit-message-install', () => {
-  it('write this test', () => {
-    console.assert(commitMessageInstall, 'should export something')
+  context('gets last commit message', () => {
+    it('returns an object', () => {
+      return schemaShot(getMessage())
+    })
   })
 })

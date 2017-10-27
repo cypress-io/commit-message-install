@@ -89,8 +89,12 @@
     "nsp": "2.8.1",
     "pre-git": "3.15.3",
     "prettier-standard": "7.0.1",
+    "schema-shot": "1.9.0",
     "semantic-release": "8.2.0",
     "simple-commit-message": "3.3.1",
     "standard": "10.0.3"
+  },
+  "dependencies": {
+    "ggit": "2.4.0"
   }
 }
