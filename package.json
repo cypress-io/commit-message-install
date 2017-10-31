@@ -95,6 +95,8 @@
     "standard": "10.0.3"
   },
   "dependencies": {
-    "ggit": "2.4.0"
+    "check-more-types": "2.24.0",
+    "ggit": "2.4.0",
+    "lazy-ass": "1.6.0"
   }
 }
