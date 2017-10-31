@@ -79,6 +79,7 @@
   },
   "devDependencies": {
     "ban-sensitive-files": "1.9.0",
+    "common-tags": "1.4.0",
     "dependency-check": "2.9.1",
     "deps-ok": "1.2.1",
     "dont-crack": "1.2.1",
@@ -92,10 +93,12 @@
     "schema-shot": "1.9.0",
     "semantic-release": "8.2.0",
     "simple-commit-message": "3.3.1",
+    "snap-shot-it": "4.0.1",
     "standard": "10.0.3"
   },
   "dependencies": {
     "check-more-types": "2.24.0",
+    "debug": "3.1.0",
     "ggit": "2.4.0",
     "lazy-ass": "1.6.0"
   }

@@ -1,6 +1,7 @@
 'use strict'
 
 const ggit = require('ggit')
+const debug = require('debug')('commit-message-install')
 
 function getMessage () {
   return ggit.lastCommitId().then(ggit.commitMessage)
@@ -26,13 +27,30 @@ function getJsonBlock (message) {
   if (!message) {
     return
   }
-  const jsonStarts = message.indexOf('```json')
+  const start = '```json'
+  const jsonStarts = message.indexOf(start)
   if (jsonStarts === -1) {
+    debug('could not find json start')
     return
   }
-  const jsonEnds = message.indexOf('```', jsonStarts + 6)
+  const jsonBlockAt = jsonStarts + start.length
+  const jsonEnds = message.indexOf('```', jsonBlockAt)
   if (jsonEnds === -1) {
+    debug('could not find json end')
+    return
+  }
 
+  debug('json starts at position', jsonBlockAt)
+  debug('json ends at position', jsonEnds)
+  const jsonTextLength = jsonEnds - jsonBlockAt
+  const jsonText = message.substr(jsonBlockAt, jsonTextLength)
+  try {
+    return JSON.parse(jsonText)
+  } catch (e) {
+    debug('could not parse json text')
+    debug('---')
+    debug(jsonText)
+    debug('---')
   }
 }
 
