@@ -99,7 +99,9 @@
   "dependencies": {
     "check-more-types": "2.24.0",
     "debug": "3.1.0",
+    "execa": "0.8.0",
     "ggit": "2.4.0",
-    "lazy-ass": "1.6.0"
+    "lazy-ass": "1.6.0",
+    "minimist": "1.2.0"
   }
 }

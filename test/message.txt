@@ -1,0 +1,11 @@
+this is a test message
+used to simulate commit message
+
+```json
+{
+  "platform": "*",
+  "packages": "debug"
+}
+```
+
+the above code block should install module "debug"

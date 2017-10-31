@@ -5,6 +5,7 @@ const debug = require('debug')('commit-message-install')
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const os = require('os')
+const execa = require('execa')
 
 function getMessage () {
   return ggit.lastCommitId().then(ggit.commitMessage)
@@ -67,6 +68,11 @@ const isNpmInstall = is.schema({
   packages: is.unemptyString
 })
 
+function isPlatformAllowed (platform) {
+  la(is.unemptyString(platform), 'invalid allowed platform', platform)
+  return platform === '*' || platform.indexOf(os.platform()) !== -1
+}
+
 function npmInstall (json) {
   if (!json) {
     debug('missing json for npm install')
@@ -77,12 +83,24 @@ function npmInstall (json) {
   if (json.platform) {
     debug('checking platform, expecting', json.platform)
     la(is.unemptyString(json.platform), 'invalid json platform', json.platform)
-    if (json.platform !== os.platform()) {
+    if (!isPlatformAllowed(json.platform)) {
       console.log('Required platform: %s', json.platform)
       console.log('Current platform: %s', os.platform())
       console.log('skipping install')
+      return
     }
   }
+
+  const env = json.env || {}
+  console.log('installing', json.packages)
+  if (is.not.empty(env)) {
+    console.log('with extra environment variables')
+    console.log(env)
+  }
+  return execa('npm', ['install', json.packages], {
+    env,
+    stdio: 'inherit'
+  }).then(x => x.stdout)
 }
 
-module.exports = { getMessage, getJsonBlock, npmInstall }
+module.exports = { getMessage, isPlatformAllowed, getJsonBlock, npmInstall }
