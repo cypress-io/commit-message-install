@@ -4,6 +4,7 @@ const ggit = require('ggit')
 const debug = require('debug')('commit-message-install')
 const la = require('lazy-ass')
 const is = require('check-more-types')
+const os = require('os')
 
 function getMessage () {
   return ggit.lastCommitId().then(ggit.commitMessage)
@@ -59,4 +60,29 @@ function getJsonBlock (message) {
   }
 }
 
-module.exports = { getMessage, getJsonBlock }
+// to install multiple packages, use comma-separated list
+const isNpmInstall = is.schema({
+  platform: is.maybe.unemptyString,
+  env: is.maybe.object,
+  packages: is.unemptyString
+})
+
+function npmInstall (json) {
+  if (!json) {
+    debug('missing json for npm install')
+    return
+  }
+  la(isNpmInstall(json), 'invalid JSON to install format', json)
+
+  if (json.platform) {
+    debug('checking platform, expecting', json.platform)
+    la(is.unemptyString(json.platform), 'invalid json platform', json.platform)
+    if (json.platform !== os.platform()) {
+      console.log('Required platform: %s', json.platform)
+      console.log('Current platform: %s', os.platform())
+      console.log('skipping install')
+    }
+  }
+}
+
+module.exports = { getMessage, getJsonBlock, npmInstall }

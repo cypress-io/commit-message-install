@@ -2,7 +2,6 @@
 
 /* eslint-env mocha */
 const { getMessage, getJsonBlock } = require('.')
-const schemaShot = require('schema-shot')
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const { stripIndent } = require('common-tags')
@@ -10,8 +9,15 @@ const snapshot = require('snap-shot-it')
 
 describe('commit-message-install', () => {
   context('gets last commit message', () => {
+    const isMessage = is.schema({
+      email: is.unemptyString,
+      subject: is.unemptyString,
+      body: is.maybe.unemptyString
+    })
     it('returns an object', () => {
-      return schemaShot(getMessage())
+      return getMessage().then(x => {
+        la(isMessage(x), 'invalid message format', x)
+      })
     })
   })
 
