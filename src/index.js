@@ -2,6 +2,8 @@
 
 const ggit = require('ggit')
 const debug = require('debug')('commit-message-install')
+const la = require('lazy-ass')
+const is = require('check-more-types')
 
 function getMessage () {
   return ggit.lastCommitId().then(ggit.commitMessage)
@@ -25,8 +27,11 @@ function getMessage () {
 */
 function getJsonBlock (message) {
   if (!message) {
+    debug('no message to process')
     return
   }
+  la(is.unemptyString(message), 'expected string message, got', message)
+
   const start = '```json'
   const jsonStarts = message.indexOf(start)
   if (jsonStarts === -1) {
