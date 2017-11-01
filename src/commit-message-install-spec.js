@@ -21,6 +21,26 @@ describe('commit-message-install', () => {
     })
   })
 
+  context('isPlatformAllowed', () => {
+    const { isPlatformAllowed } = require('.')
+
+    it('is a function', () => {
+      la(is.fn(isPlatformAllowed))
+    })
+
+    it('compares platforms', () => {
+      snapshot(
+        isPlatformAllowed,
+        ['win32', 'win32'],
+        ['win32', 'linux'],
+        ['*', 'linux'],
+        ['win32,linux', 'linux'],
+        ['win32|linux', 'linux'],
+        ['win32, linux', 'linux']
+      )
+    })
+  })
+
   context('getCommand', () => {
     const { getCommand } = require('.')
 

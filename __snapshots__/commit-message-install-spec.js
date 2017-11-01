@@ -36,3 +36,51 @@ exports['commit-message-install getCommand removes --file and its argument 1'] =
 exports['commit-message-install getJsonBlock returns first found json block 1'] = {
   "foo": "bar"
 }
+
+exports['commit-message-install isPlatformAllowed compares platforms isPlatformAllowed 1'] = {
+  "name": "isPlatformAllowed",
+  "behavior": [
+    {
+      "given": [
+        "win32",
+        "win32"
+      ],
+      "expect": true
+    },
+    {
+      "given": [
+        "win32",
+        "linux"
+      ],
+      "expect": false
+    },
+    {
+      "given": [
+        "*",
+        "linux"
+      ],
+      "expect": true
+    },
+    {
+      "given": [
+        "win32,linux",
+        "linux"
+      ],
+      "expect": true
+    },
+    {
+      "given": [
+        "win32|linux",
+        "linux"
+      ],
+      "expect": true
+    },
+    {
+      "given": [
+        "win32, linux",
+        "linux"
+      ],
+      "expect": true
+    }
+  ]
+}

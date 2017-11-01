@@ -3,7 +3,7 @@ used to simulate commit message
 
 ```json
 {
-  "platform": "*",
+  "platform": "darwin|linux",
   "env": {
     "FOO": "bar"
   }

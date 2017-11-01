@@ -52,6 +52,24 @@ Happy installation
 **note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a 
 list of several platforms like `darwin,linux`
 
+### Run or skip command based on platform
+
+If the commit message allows a specific platform, you can run any command, while
+setting environment variables from the commit message. For example if th
+commit message embeds the following JSON block
+
+```json
+{
+    "platform": "win32",
+    "env": {
+        "FOO": "bar"
+    }
+}
+```
+
+and the CI has command `run-if echo Foo is \\$FOO`, then on Windows CI it will print
+`Foo is bar` and on other platforms it will skip this step.
+
 ## Debugging
 
 - Run this tool with `DEBUG=commit-message-install` environment variable set

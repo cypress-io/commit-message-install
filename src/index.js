@@ -75,9 +75,13 @@ const isRunIf = is.schema({
   env: is.maybe.object
 })
 
-function isPlatformAllowed (platform) {
+function isPlatformAllowed (platform, osPlatform = os.platform()) {
+  if (!platform) {
+    return true
+  }
+  debug('checking platform, allowed platform is', platform)
   la(is.unemptyString(platform), 'invalid allowed platform', platform)
-  return platform === '*' || platform.indexOf(os.platform()) !== -1
+  return platform === '*' || platform.indexOf(osPlatform) !== -1
 }
 
 function getCommand (args) {
@@ -97,25 +101,33 @@ function getCommand (args) {
 function runIf (command, json) {
   la(is.unemptyString(command), 'missing command to run', command)
   la(isRunIf(json), 'invalid runIf json', json)
-  return execa.shell(command, { env: json.env }).then(prop('stdout'))
+
+  if (!isPlatformAllowed(json.platform, os.platform())) {
+    console.log('Required platform: %s', json.platform)
+    console.log('Current platform: %s', os.platform())
+    console.log('skipping command')
+    return Promise.resolve()
+  }
+
+  const options = {
+    env: json.env,
+    stdio: 'inherit'
+  }
+  return execa.shell(command, options).then(prop('stdout'))
 }
 
 function npmInstall (json) {
   if (!json) {
     debug('missing json for npm install')
-    return
+    return Promise.resolve()
   }
   la(isNpmInstall(json), 'invalid JSON to install format', json)
 
-  if (json.platform) {
-    debug('checking platform, expecting', json.platform)
-    la(is.unemptyString(json.platform), 'invalid json platform', json.platform)
-    if (!isPlatformAllowed(json.platform)) {
-      console.log('Required platform: %s', json.platform)
-      console.log('Current platform: %s', os.platform())
-      console.log('skipping install')
-      return
-    }
+  if (!isPlatformAllowed(json.platform, os.platform())) {
+    console.log('Required platform: %s', json.platform)
+    console.log('Current platform: %s', os.platform())
+    console.log('skipping install')
+    return Promise.resolve()
   }
 
   const env = json.env || {}
