@@ -6,6 +6,7 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const os = require('os')
 const execa = require('execa')
+const chalk = require('chalk')
 
 const prop = name => object => object[name]
 
@@ -103,9 +104,9 @@ function runIf (command, json) {
   la(isRunIf(json), 'invalid runIf json', json)
 
   if (!isPlatformAllowed(json.platform, os.platform())) {
-    console.log('Required platform: %s', json.platform)
-    console.log('Current platform: %s', os.platform())
-    console.log('skipping command')
+    console.log('Required platform: %s', chalk.green(json.platform))
+    console.log('Current platform: %s', chalk.red(os.platform()))
+    console.log('skipping command ⏩  %s', command)
     return Promise.resolve()
   }
 
@@ -124,9 +125,9 @@ function npmInstall (json) {
   la(isNpmInstall(json), 'invalid JSON to install format', json)
 
   if (!isPlatformAllowed(json.platform, os.platform())) {
-    console.log('Required platform: %s', json.platform)
-    console.log('Current platform: %s', os.platform())
-    console.log('skipping install')
+    console.log('Required platform: %s', chalk.green(json.platform))
+    console.log('Current platform: %s', chalk.red(os.platform()))
+    console.log('skipping NPM install')
     return Promise.resolve()
   }
 

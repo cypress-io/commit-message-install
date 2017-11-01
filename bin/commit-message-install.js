@@ -21,6 +21,11 @@ start.then(getJsonBlock).then(json => {
   if (!json) {
     return
   }
+  // alias for API simplicity
+  json.packages = json.packages || json.package
+  if (json.package) {
+    delete json.package
+  }
   console.log('got json block from the git commit message')
   console.log(JSON.stringify(json, null, 2))
   return npmInstall(json)
