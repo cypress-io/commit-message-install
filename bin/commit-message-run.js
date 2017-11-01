@@ -35,7 +35,7 @@ if (args.file) {
 }
 start.then(getJsonBlock).then(json => {
   if (!json) {
-    return runIf(actualCommand)
+    return runIf(actualCommand, {})
   }
   console.log('got json block from the git commit message')
   console.log(JSON.stringify(json, null, 2))
