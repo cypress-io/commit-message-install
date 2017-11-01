@@ -13,10 +13,49 @@
 Requires [Node](https://nodejs.org/en/) version 6 or above.
 
 ```sh
-npm install --save commit-message-install
+npm install --save-dev commit-message-install
 ```
 
 ## Use
+
+### Install NPM package from commit message
+
+Imagine you have a CI build that installs NPM dependencies, but you also want to
+override one or more dependencies and test by creating a commit. Instead of changing
+`package.json` you can make a commit message with embedded JSON block describing
+custom installation. Then use this CLI tool to install based on the commit message.
+
+Example CI file command
+
+```
+- npm i -g commit-message-install
+- commit-message-install
+```
+
+If commit message is this
+
+```
+this will install package debug and chalk and while
+installing them will set environment variable FOO to "bar".
+The install will happen on all platforms
+
+    ```json
+    {
+        "platform": "*",
+        "packages": "debug,chalk"
+    }
+    ```
+
+Happy installation
+```
+
+**note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a 
+list of several platforms like `darwin,linux`
+
+## Debugging
+
+- Run this tool with `DEBUG=commit-message-install` environment variable set
+- Force reading commit message from a local file with `--file <filename>` option
 
 ### Small print
 
