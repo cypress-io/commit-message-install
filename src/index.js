@@ -1,6 +1,5 @@
 'use strict'
 
-const ggit = require('ggit')
 const debug = require('debug')('commit-message-install')
 const la = require('lazy-ass')
 const is = require('check-more-types')
@@ -11,7 +10,10 @@ const chalk = require('chalk')
 const prop = name => object => object[name]
 
 function getMessage () {
-  return ggit.lastCommitId().then(ggit.commitMessage)
+  debug('getting last git commit message body')
+  return execa
+    .shell('git show -s --pretty=%b', { stdio: 'inherit' })
+    .then(prop('stdout'))
 }
 
 // parses given commit message text (body)

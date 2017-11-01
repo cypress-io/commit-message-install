@@ -15,7 +15,7 @@ if (args.file) {
   const message = fs.readFileSync(args.file, 'utf8')
   start = Promise.resolve(message)
 } else {
-  start = getMessage().then(x => x.body)
+  start = getMessage()
 }
 start.then(getJsonBlock).then(json => {
   if (!json) {

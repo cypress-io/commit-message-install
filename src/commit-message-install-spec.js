@@ -9,14 +9,9 @@ const snapshot = require('snap-shot-it')
 
 describe('commit-message-install', () => {
   context('gets last commit message', () => {
-    const isMessage = is.schema({
-      email: is.unemptyString,
-      subject: is.unemptyString,
-      body: is.maybe.unemptyString
-    })
-    it('returns an object', () => {
+    it('returns just the body of the commit message', () => {
       return getMessage().then(x => {
-        la(isMessage(x), 'invalid message format', x)
+        la(is.maybe.unemptyString(x), 'invalid message format', x)
       })
     })
   })
