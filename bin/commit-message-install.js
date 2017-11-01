@@ -21,9 +21,7 @@ start.then(getJsonBlock).then(json => {
   if (!json) {
     return
   }
-  if (json) {
-    console.log('got json block from the git commit message')
-    console.log(JSON.stringify(json, null, 2))
-    return npmInstall(json)
-  }
+  console.log('got json block from the git commit message')
+  console.log(JSON.stringify(json, null, 2))
+  return npmInstall(json)
 }, console.error)

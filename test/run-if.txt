@@ -1,0 +1,13 @@
+this is a test message
+used to simulate commit message
+
+```json
+{
+  "platform": "*",
+  "env": {
+    "FOO": "bar"
+  }
+}
+```
+
+some other text

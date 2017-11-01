@@ -6,7 +6,8 @@
   "bugs": "https://github.com/bahmutov/commit-message-install/issues",
   "bin": {
     "commit-message-install": "bin/commit-message-install.js",
-    "cmi": "bin/commit-message-install.js"
+    "cmi": "bin/commit-message-install.js",
+    "run-if": "bin/commit-message-run.js"
   },
   "config": {
     "pre-git": {
@@ -67,7 +68,8 @@
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "test": "npm run unit",
     "unit": "mocha src/*-spec.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "demo": "node bin/commit-message-run.js -f test/run-if.txt echo Foo is \\$FOO"
   },
   "release": {
     "analyzeCommits": "simple-commit-message",

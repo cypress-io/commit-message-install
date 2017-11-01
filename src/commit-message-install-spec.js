@@ -21,6 +21,32 @@ describe('commit-message-install', () => {
     })
   })
 
+  context('getCommand', () => {
+    const { getCommand } = require('.')
+
+    it('is a function', () => {
+      la(is.fn(getCommand))
+    })
+
+    it('returns original command from array', () => {
+      const args = ['echo', 'foo', 'bar']
+      const command = getCommand(args)
+      snapshot({ args, command })
+    })
+
+    it('removes -f and its argument', () => {
+      const args = ['-f', 'file.txt', 'echo', 'foo', 'bar']
+      const command = getCommand(args)
+      snapshot({ args, command })
+    })
+
+    it('removes --file and its argument', () => {
+      const args = ['--file', 'file.txt', 'echo', 'foo', 'bar']
+      const command = getCommand(args)
+      snapshot({ args, command })
+    })
+  })
+
   context('getJsonBlock', () => {
     it('is a function', () => {
       la(is.fn(getJsonBlock))
@@ -35,6 +61,26 @@ describe('commit-message-install', () => {
       }
       \`\`\`
       see how the code block is not not terminated
+      `
+      const result = getJsonBlock(message)
+      la(is.object(result), 'result should be an object', result)
+      snapshot(result)
+    })
+
+    it('returns first found json block', () => {
+      const message = stripIndent`
+      some text
+      \`\`\`json
+      {
+        "foo": "bar"
+      }
+      \`\`\`
+      then second block
+      \`\`\`json
+      {
+        "no": false
+      }
+      \`\`\`
       `
       const result = getJsonBlock(message)
       la(is.object(result), 'result should be an object', result)

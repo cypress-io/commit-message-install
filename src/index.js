@@ -7,6 +7,8 @@ const is = require('check-more-types')
 const os = require('os')
 const execa = require('execa')
 
+const prop = name => object => object[name]
+
 function getMessage () {
   return ggit.lastCommitId().then(ggit.commitMessage)
 }
@@ -68,9 +70,34 @@ const isNpmInstall = is.schema({
   packages: is.unemptyString
 })
 
+const isRunIf = is.schema({
+  platform: is.maybe.unemptyString,
+  env: is.maybe.object
+})
+
 function isPlatformAllowed (platform) {
   la(is.unemptyString(platform), 'invalid allowed platform', platform)
   return platform === '*' || platform.indexOf(os.platform()) !== -1
+}
+
+function getCommand (args) {
+  la(is.array(args), 'expected arguments', args)
+  const cloned = [...args]
+  const flags = ['-f', '--file']
+  if (flags.includes(cloned[0])) {
+    debug('found flag', cloned[0])
+    cloned.shift()
+    cloned.shift()
+  }
+  const command = cloned.join(' ')
+  debug('found command', command)
+  return command
+}
+
+function runIf (command, json) {
+  la(is.unemptyString(command), 'missing command to run', command)
+  la(isRunIf(json), 'invalid runIf json', json)
+  return execa.shell(command, { env: json.env }).then(prop('stdout'))
 }
 
 function npmInstall (json) {
@@ -100,7 +127,14 @@ function npmInstall (json) {
   return execa('npm', ['install', json.packages], {
     env,
     stdio: 'inherit'
-  }).then(x => x.stdout)
+  }).then(prop('stdout'))
 }
 
-module.exports = { getMessage, isPlatformAllowed, getJsonBlock, npmInstall }
+module.exports = {
+  getMessage,
+  getCommand,
+  runIf,
+  isPlatformAllowed,
+  getJsonBlock,
+  npmInstall
+}
