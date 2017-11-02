@@ -106,18 +106,20 @@ function runIf (command, json) {
   la(is.unemptyString(command), 'missing command to run', command)
   la(isRunIf(json), 'invalid runIf json', json)
 
-  if (!isPlatformAllowed(json.platform, os.platform())) {
+  const osPlatform = os.platform()
+  if (!isPlatformAllowed(json.platform, osPlatform)) {
     console.log('Required platform: %s', chalk.green(json.platform))
-    console.log('Current platform: %s', chalk.red(os.platform()))
+    console.log('Current platform: %s', chalk.red(osPlatform))
     console.log('skipping command ⏩  %s', command)
     return Promise.resolve()
   }
+  console.log('Platform %s is allowed', chalk.green(osPlatform))
 
   const options = {
     env: json.env,
     stdio: 'inherit'
   }
-  return execa.shell(command, options).then(prop('stdout'))
+  return execa.shell(command, options)
 }
 
 function npmInstall (json) {
@@ -127,12 +129,14 @@ function npmInstall (json) {
   }
   la(isNpmInstall(json), 'invalid JSON to install format', json)
 
-  if (!isPlatformAllowed(json.platform, os.platform())) {
+  const osPlatform = os.platform()
+  if (!isPlatformAllowed(json.platform, osPlatform)) {
     console.log('Required platform: %s', chalk.green(json.platform))
-    console.log('Current platform: %s', chalk.red(os.platform()))
+    console.log('Current platform: %s', chalk.red(osPlatform))
     console.log('skipping NPM install')
     return Promise.resolve()
   }
+  console.log('Platform %s is allowed', chalk.green(osPlatform))
 
   const env = json.env || {}
   console.log('installing', json.packages)
@@ -140,10 +144,43 @@ function npmInstall (json) {
     console.log('with extra environment variables')
     console.log(env)
   }
+  if (json.packages.indexOf(',') !== -1) {
+    console.log('warning: list of packages includes commas')
+    console.log('npm install might not work!')
+    console.log(json.packages)
+  }
   return execa('npm', ['install', json.packages], {
     env,
     stdio: 'inherit'
-  }).then(prop('stdout'))
+  })
+}
+
+// forms JSON object that can be parsed later
+function getInstallJson (packages, env = {}, platform = os.platform()) {
+  la(
+    is.unemptyString(packages) || is.strings(packages),
+    'invalid package / list of packages',
+    packages
+  )
+  la(is.object(env), 'invalid env object', env)
+  if (is.strings(packages)) {
+    packages = packages.join(' ')
+  }
+  la(is.unemptyString(platform), 'missing platform', platform)
+
+  const json = {
+    platform,
+    env,
+    packages
+  }
+  la(
+    isNpmInstall(json),
+    'formed invalid json object',
+    json,
+    'from arguments',
+    arguments
+  )
+  return json
 }
 
 module.exports = {
@@ -152,5 +189,6 @@ module.exports = {
   runIf,
   isPlatformAllowed,
   getJsonBlock,
-  npmInstall
+  npmInstall,
+  getInstallJson
 }

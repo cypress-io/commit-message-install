@@ -22,6 +22,22 @@ describe('commit-message-install', () => {
     })
   })
 
+  context('getInstallJson', () => {
+    const { getInstallJson } = require('.')
+
+    it('sets properties and all platforms', () => {
+      snapshot(getInstallJson('debug', { foo: 42 }, '*'))
+    })
+
+    it('sets given platform', () => {
+      snapshot(getInstallJson('debug', { foo: 42 }, 'linux'))
+    })
+
+    it('sets several modules', () => {
+      snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux'))
+    })
+  })
+
   context('isPlatformAllowed', () => {
     const { isPlatformAllowed } = require('.')
 

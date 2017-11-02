@@ -1,6 +1,28 @@
-exports['commit-message-install getJsonBlock finds single json block at start 1'] = {
-  "foo": "bar"
+exports['commit-message-install getInstallJson sets properties and all platforms 1'] = {
+  "platform": "*",
+  "env": {
+    "foo": 42
+  },
+  "packages": "debug"
 }
+
+exports['commit-message-install getInstallJson sets given platform 1'] = {
+  "platform": "linux",
+  "env": {
+    "foo": 42
+  },
+  "packages": "debug"
+}
+
+exports['commit-message-install getInstallJson sets several modules 1'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk"
+}
+
+exports['commit-message-install gets last commit message returns just the body of the commit message 1'] = `
+message body
+`
 
 exports['commit-message-install isPlatformAllowed compares platforms isPlatformAllowed 1'] = {
   "name": "isPlatformAllowed",
@@ -81,6 +103,10 @@ exports['commit-message-install getCommand removes --file and its argument 1'] =
   "command": "echo foo bar"
 }
 
+exports['commit-message-install getJsonBlock finds single json block at start 1'] = {
+  "foo": "bar"
+}
+
 exports['commit-message-install getJsonBlock finds single json block 1'] = {
   "foo": "bar"
 }
@@ -88,7 +114,3 @@ exports['commit-message-install getJsonBlock finds single json block 1'] = {
 exports['commit-message-install getJsonBlock returns first found json block 1'] = {
   "foo": "bar"
 }
-
-exports['commit-message-install gets last commit message returns just the body of the commit message 1'] = `
-message body
-`

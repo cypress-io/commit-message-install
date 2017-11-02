@@ -70,6 +70,25 @@ commit message embeds the following JSON block
 and the CI has command `run-if echo Foo is \\$FOO`, then on Windows CI it will print
 `Foo is bar` and on other platforms it will skip this step.
 
+## API
+
+You can form good Json object to be included in markdown `json` block in the body of
+the commit message using provided function
+
+```js
+const {getInstallJson} = require('commit-message-install')
+// package(s), env, platform
+const json = getInstallJson('foo', {foo: 42}, 'linux')
+// returns an object
+// {platform: "linux", env: {foo: 42}, packages: "foo"}
+```
+
+You can pass individual package name like `debug` or several as a single string `debug chalk`
+or a list `['debug', 'chalk']`
+
+You can pass for platform either individual `os.platform()` or a "*"" for all, and even
+several platforms like `win32,linux` or `linux|darwin`.
+
 ## Debugging
 
 - Run this tool with `DEBUG=commit-message-install` environment variable set
