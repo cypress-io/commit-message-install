@@ -67,6 +67,20 @@ describe('commit-message-install', () => {
       la(is.fn(getJsonBlock))
     })
 
+    it('finds single json block at start', () => {
+      const message = stripIndent`
+      \`\`\`json
+      {
+        "foo": "bar"
+      }
+      \`\`\`
+      and some test after that
+      `
+      const result = getJsonBlock(message)
+      la(is.object(result), 'result should be an object', result)
+      snapshot(result)
+    })
+
     it('finds single json block', () => {
       const message = stripIndent`
       some text
@@ -75,7 +89,7 @@ describe('commit-message-install', () => {
         "foo": "bar"
       }
       \`\`\`
-      see how the code block is not not terminated
+      some text after it
       `
       const result = getJsonBlock(message)
       la(is.object(result), 'result should be an object', result)
