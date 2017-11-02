@@ -11,9 +11,7 @@ const prop = name => object => object[name]
 
 function getMessage () {
   debug('getting last git commit message body')
-  return execa
-    .shell('git show -s --pretty=%b', { stdio: 'inherit' })
-    .then(prop('stdout'))
+  return execa.shell('git show -s --pretty=%b').then(prop('stdout'))
 }
 
 // parses given commit message text (body)
@@ -37,6 +35,9 @@ function getJsonBlock (message) {
     debug('no message to process')
     return
   }
+  debug('extracting JSON from message below')
+  debug(message)
+  debug('--- end of message ---')
   la(is.unemptyString(message), 'expected string message, got', message)
 
   const start = '```json'

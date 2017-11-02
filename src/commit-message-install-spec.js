@@ -6,12 +6,18 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const { stripIndent } = require('common-tags')
 const snapshot = require('snap-shot-it')
+const { stubSpawnShellOnce } = require('stub-spawn-once')
 
 describe('commit-message-install', () => {
   context('gets last commit message', () => {
+    beforeEach(() => {
+      stubSpawnShellOnce('git show -s --pretty=%b', 0, 'message body', '')
+    })
+
     it('returns just the body of the commit message', () => {
       return getMessage().then(x => {
-        la(is.maybe.unemptyString(x), 'invalid message format', x)
+        la(is.unemptyString(x), 'invalid message format', x)
+        snapshot(x)
       })
     })
   })

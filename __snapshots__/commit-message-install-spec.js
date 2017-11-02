@@ -88,3 +88,7 @@ exports['commit-message-install getJsonBlock finds single json block 1'] = {
 exports['commit-message-install getJsonBlock returns first found json block 1'] = {
   "foo": "bar"
 }
+
+exports['commit-message-install gets last commit message returns just the body of the commit message 1'] = `
+message body
+`
