@@ -15,6 +15,7 @@ script:
   - node -c bin/commit-message-run.js
   - $(npm bin)/if-node-version ">=6" npm test
   - DEBUG=commit-message-install node ./bin/commit-message-install.js
+  - DEBUG=commit-message-install node ./bin/commit-message-install.js --else "echo --else is working"
   # synthetic test case
   - DEBUG=commit-message-install node ./bin/commit-message-install.js -f test/message.txt
   - npm run demo

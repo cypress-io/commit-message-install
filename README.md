@@ -52,6 +52,15 @@ Happy installation
 **note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a 
 list of several platforms like `darwin,linux`
 
+### Alternative command
+
+You can specify a command to run *if commit message has no JSON block*. For example you can 
+install default dependency
+
+```bash
+$ $(npm bin)/commit-message-install --else "npm install foo-bar"
+```
+
 ### Run or skip command based on platform
 
 If the commit message allows a specific platform, you can run any command, while

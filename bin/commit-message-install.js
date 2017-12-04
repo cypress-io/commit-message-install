@@ -2,12 +2,8 @@
 
 'use strict'
 
-const args = require('minimist')(process.argv.slice(2), {
-  alias: {
-    file: 'f'
-  },
-  string: 'file'
-})
+const debug = require('debug')('commit-message-install')
+const execa = require('execa')
 
 const api = require('..')
 const getMessage = api.getMessage
@@ -19,28 +15,56 @@ function onError (e) {
   process.exit(1)
 }
 
-let start
-if (args.file) {
-  console.log('loading message from file', args.file)
-  const fs = require('fs')
-  const message = fs.readFileSync(args.file, 'utf8')
-  start = Promise.resolve(message)
-} else {
-  start = getMessage()
-}
-start
-  .then(getJsonBlock)
-  .then(json => {
-    if (!json) {
-      return
-    }
-    // alias for API simplicity
-    json.packages = json.packages || json.package
-    if (json.package) {
-      delete json.package
-    }
-    console.log('got json block from the git commit message')
-    console.log(JSON.stringify(json, null, 2))
-    return npmInstall(json)
+function commitMessageInstall (cliArguments) {
+  if (!cliArguments) {
+    cliArguments = process.argv.slice(2)
+  }
+
+  const args = require('minimist')(cliArguments, {
+    alias: {
+      file: 'f'
+    },
+    string: ['file', 'else']
   })
-  .catch(onError)
+
+  let start
+  if (args.file) {
+    console.log('loading message from file', args.file)
+    const fs = require('fs')
+    const message = fs.readFileSync(args.file, 'utf8')
+    start = Promise.resolve(message)
+  } else {
+    start = getMessage()
+  }
+  return start
+    .then(getJsonBlock)
+    .then(json => {
+      if (!json) {
+        debug('nothing to do from the commit message')
+        if (args.else) {
+          debug('have --else command')
+          debug(args.else)
+          const options = {
+            stdio: 'inherit'
+          }
+          return execa.shell(args.else, options)
+        }
+        return
+      }
+      // alias for API simplicity
+      json.packages = json.packages || json.package
+      if (json.package) {
+        delete json.package
+      }
+      console.log('got json block from the git commit message')
+      console.log(JSON.stringify(json, null, 2))
+      return npmInstall(json)
+    })
+    .catch(onError)
+}
+
+if (!module.parent) {
+  commitMessageInstall()
+}
+
+module.exports = commitMessageInstall

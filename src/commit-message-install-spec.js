@@ -23,6 +23,21 @@ describe('commit-message-install', () => {
     })
   })
 
+  context('--else branch', () => {
+    const commitMessageInstall = require('../bin/commit-message-install')
+
+    beforeEach(() => {
+      stubSpawnShellOnce('git show -s --pretty=%b', 0, 'nothing to do', '')
+      stubSpawnShellOnce('echo cool', 0, 'cool is working', '')
+    })
+
+    it('executes --else command', () => {
+      return commitMessageInstall(['--else', 'echo cool']).then(x => {
+        la(x.stdout === 'cool is working')
+      })
+    })
+  })
+
   context('getInstallJson', () => {
     const getInstallJson = require('.').getInstallJson
 
