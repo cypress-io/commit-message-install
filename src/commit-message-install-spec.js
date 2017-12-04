@@ -1,12 +1,13 @@
 'use strict'
 
 /* eslint-env mocha */
-const { getMessage, getJsonBlock } = require('.')
+const getMessage = require('.').getMessage
+const getJsonBlock = require('.').getJsonBlock
 const la = require('lazy-ass')
 const is = require('check-more-types')
-const { stripIndent } = require('common-tags')
+const stripIndent = require('common-tags').stripIndent
 const snapshot = require('snap-shot-it')
-const { stubSpawnShellOnce } = require('stub-spawn-once')
+const stubSpawnShellOnce = require('stub-spawn-once').stubSpawnShellOnce
 
 describe('commit-message-install', () => {
   context('gets last commit message', () => {
@@ -23,7 +24,7 @@ describe('commit-message-install', () => {
   })
 
   context('getInstallJson', () => {
-    const { getInstallJson } = require('.')
+    const getInstallJson = require('.').getInstallJson
 
     it('sets properties and all platforms', () => {
       snapshot(getInstallJson('debug', { foo: 42 }, '*'))
@@ -39,7 +40,7 @@ describe('commit-message-install', () => {
   })
 
   context('isPlatformAllowed', () => {
-    const { isPlatformAllowed } = require('.')
+    const isPlatformAllowed = require('.').isPlatformAllowed
 
     it('is a function', () => {
       la(is.fn(isPlatformAllowed))
@@ -59,7 +60,7 @@ describe('commit-message-install', () => {
   })
 
   context('getCommand', () => {
-    const { getCommand } = require('.')
+    const getCommand = require('.').getCommand
 
     it('is a function', () => {
       la(is.fn(getCommand))

@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 
+'use strict'
+
 const args = require('minimist')(process.argv.slice(2), {
   alias: {
     file: 'f'
   },
   string: 'file'
 })
-const { getMessage, getJsonBlock, npmInstall } = require('..')
+
+const api = require('..')
+const getMessage = api.getMessage
+const getJsonBlock = api.getJsonBlock
+const npmInstall = api.npmInstall
 
 function onError (e) {
   console.error(e)

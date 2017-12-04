@@ -79,7 +79,10 @@ const isRunIf = is.schema({
   env: is.maybe.object
 })
 
-function isPlatformAllowed (platform, osPlatform = os.platform()) {
+function isPlatformAllowed (platform, osPlatform) {
+  if (!osPlatform) {
+    osPlatform = os.platform()
+  }
   if (!platform) {
     return true
   }
@@ -88,9 +91,13 @@ function isPlatformAllowed (platform, osPlatform = os.platform()) {
   return platform === '*' || platform.indexOf(osPlatform) !== -1
 }
 
+function clone (x) {
+  return JSON.parse(JSON.stringify(x))
+}
+
 function getCommand (args) {
   la(is.array(args), 'expected arguments', args)
-  const cloned = [...args]
+  const cloned = clone(args)
   const flags = ['-f', '--file']
   if (flags.includes(cloned[0])) {
     debug('found flag', cloned[0])
@@ -156,7 +163,13 @@ function npmInstall (json) {
 }
 
 // forms JSON object that can be parsed later
-function getInstallJson (packages, env = {}, platform = os.platform()) {
+function getInstallJson (packages, env, platform) {
+  if (!env) {
+    env = {}
+  }
+  if (!platform) {
+    platform = os.platform()
+  }
   la(
     is.unemptyString(packages) || is.strings(packages),
     'invalid package / list of packages',

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict'
+
 // runs any command if commit message
 //  a: does not contain JSON
 //  b: JSON does not specify a platform that disallows it
@@ -19,7 +21,12 @@ const args = require('minimist')(allArgs, {
   },
   string: 'file'
 })
-const { getMessage, getCommand, getJsonBlock, runIf } = require('..')
+
+const api = require('..')
+const getMessage = api.getMessage
+const getJsonBlock = api.getJsonBlock
+const npmInstall = api.npmInstall
+const runIf = api.runIf
 
 const actualCommand = getCommand(allArgs)
 debug('command to run:', actualCommand)
