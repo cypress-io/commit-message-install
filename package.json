@@ -72,6 +72,10 @@
     "demo": "node bin/commit-message-run.js -f test/run-if.txt echo Foo is \\$FOO"
   },
   "release": {
+    "verifyConditions": {
+      "path": "condition-node-version",
+      "node": "8"
+    },
     "analyzeCommits": "simple-commit-message",
     "generateNotes": "github-post-release",
     "verifyRelease": {
@@ -82,6 +86,7 @@
   "devDependencies": {
     "ban-sensitive-files": "1.9.0",
     "common-tags": "1.4.0",
+    "condition-node-version": "1.3.0",
     "dependency-check": "2.9.1",
     "deps-ok": "1.2.1",
     "dont-crack": "1.2.1",
