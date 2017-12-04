@@ -13,7 +13,7 @@ script:
   # check syntax of the script
   - node -c bin/commit-message-install.js
   - node -c bin/commit-message-run.js
-  - npm test
+  - $(npm bin)/if-node-version ">=6" npm test
   - DEBUG=commit-message-install node ./bin/commit-message-install.js
   # synthetic test case
   - DEBUG=commit-message-install node ./bin/commit-message-install.js -f test/message.txt

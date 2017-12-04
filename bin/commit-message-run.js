@@ -25,7 +25,7 @@ const args = require('minimist')(allArgs, {
 const api = require('..')
 const getMessage = api.getMessage
 const getJsonBlock = api.getJsonBlock
-const npmInstall = api.npmInstall
+const getCommand = api.getCommand
 const runIf = api.runIf
 
 const actualCommand = getCommand(allArgs)

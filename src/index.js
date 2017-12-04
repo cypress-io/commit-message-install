@@ -95,11 +95,15 @@ function clone (x) {
   return JSON.parse(JSON.stringify(x))
 }
 
+function includes (list, value) {
+  return list.indexOf(value) !== -1
+}
+
 function getCommand (args) {
   la(is.array(args), 'expected arguments', args)
   const cloned = clone(args)
   const flags = ['-f', '--file']
-  if (flags.includes(cloned[0])) {
+  if (includes(flags, cloned[0])) {
     debug('found flag', cloned[0])
     cloned.shift()
     cloned.shift()
