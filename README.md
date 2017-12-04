@@ -70,6 +70,19 @@ commit message embeds the following JSON block
 and the CI has command `run-if echo Foo is \\$FOO`, then on Windows CI it will print
 `Foo is bar` and on other platforms it will skip this step.
 
+In general, if you use `commit-message-install` on the CI, then you should use `run-if` command as well!
+For example, here are CircleCI steps that install default dependencies, but then run
+conditional steps
+
+```
+steps:
+  - checkout
+  - run: npm install
+  - run: $(npm bin)/commit-message-install
+  - run: $(npm bin)/run-if $(npm bin)/cypress version
+  - run: DEBUG=cypress:cli $(npm bin)/run-if $(npm bin)/cypress verify
+```
+
 ## API
 
 You can form good Json object to be included in markdown `json` block in the body of
