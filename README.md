@@ -49,12 +49,12 @@ The install will happen on all platforms
 Happy installation
 ```
 
-**note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a 
+**note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a
 list of several platforms like `darwin,linux`
 
 ### Alternative command
 
-You can specify a command to run *if commit message has no JSON block*. For example you can 
+You can specify a command to run *if commit message has no JSON block*. For example you can
 install default dependency
 
 ```bash
@@ -127,11 +127,11 @@ Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2017
 License: MIT - do anything with the code, but don't blame me if it does not work.
 
 Support: if you find any problems with this module, email / tweet /
-[open issue](https://github.com/bahmutov/commit-message-install/issues) on Github
+[open issue](https://github.com/cypress-io/commit-message-install/issues) on Github
 
 ## MIT License
 
-Copyright (c) 2017 Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt;
+Copyright (c) 2017 Cypress.io
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -156,8 +156,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 [npm-icon]: https://nodei.co/npm/commit-message-install.svg?downloads=true
 [npm-url]: https://npmjs.org/package/commit-message-install
-[ci-image]: https://travis-ci.org/bahmutov/commit-message-install.svg?branch=master
-[ci-url]: https://travis-ci.org/bahmutov/commit-message-install
+[ci-image]: https://travis-ci.org/cypress-io/commit-message-install.svg?branch=master
+[ci-url]: https://travis-ci.org/cypress-io/commit-message-install
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
