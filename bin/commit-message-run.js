@@ -17,9 +17,10 @@ const debug = require('debug')('commit-message-install')
 const allArgs = process.argv.slice(2)
 const args = require('minimist')(allArgs, {
   alias: {
-    file: 'f'
+    file: 'f',
+    sha: 'commit'
   },
-  string: 'file'
+  string: ['file', 'sha']
 })
 
 const api = require('..')
@@ -43,7 +44,7 @@ if (args.file) {
   const message = fs.readFileSync(args.file, 'utf8')
   start = Promise.resolve(message)
 } else {
-  start = getMessage()
+  start = getMessage(args.sha)
 }
 start
   .then(getJsonBlock)
