@@ -206,6 +206,12 @@ function getInstallJson (packages, env, platform, branch) {
   return json
 }
 
+// looks at the current Git message,
+// extracts JSON block
+function getJsonFromGit () {
+  return getMessage().then(getJsonBlock)
+}
+
 module.exports = {
   getMessage,
   getCommand,
@@ -213,5 +219,6 @@ module.exports = {
   isPlatformAllowed,
   getJsonBlock,
   npmInstall,
-  getInstallJson
+  getInstallJson,
+  getJsonFromGit
 }

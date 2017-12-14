@@ -3,6 +3,8 @@
 /* eslint-env mocha */
 const getMessage = require('.').getMessage
 const getJsonBlock = require('.').getJsonBlock
+const getJsonFromGit = require('.').getJsonFromGit
+
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const stripIndent = require('common-tags').stripIndent
@@ -10,9 +12,11 @@ const snapshot = require('snap-shot-it')
 const stubSpawnShellOnce = require('stub-spawn-once').stubSpawnShellOnce
 
 describe('commit-message-install', () => {
+  const getMessageGitCommand = 'git show -s --pretty=%b'
+
   context('gets last commit message', () => {
     beforeEach(() => {
-      stubSpawnShellOnce('git show -s --pretty=%b', 0, 'message body', '')
+      stubSpawnShellOnce(getMessageGitCommand, 0, 'message body', '')
     })
 
     it('returns just the body of the commit message', () => {
@@ -20,6 +24,30 @@ describe('commit-message-install', () => {
         la(is.unemptyString(x), 'invalid message format', x)
         snapshot(x)
       })
+    })
+  })
+
+  context('getJsonFromGit', () => {
+    const message = `
+      below is test json block
+
+      \`\`\`json
+      {
+        "platform": "win32",
+        "branch": "some-branch"
+      }
+      \`\`\`
+    `
+    beforeEach(() => {
+      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
+    })
+
+    it('is a function', () => {
+      la(is.fn(getJsonFromGit))
+    })
+
+    it('extracts the json from git message', () => {
+      getJsonFromGit().then(snapshot)
     })
   })
 

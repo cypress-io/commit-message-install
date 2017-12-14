@@ -94,6 +94,20 @@ steps:
 
 ## API
 
+### getJsonFromGit
+
+Extracts JSON block from the current Git message text
+
+```js
+const {getJsonFromGit} = require('commit-message-install')
+getJsonFromGit()
+    .then(json => {
+        // {platform: 'win32', packages: 'foo', branch: 'test-branch'}
+    })
+```
+
+### getInstallJson
+
 You can form good Json object to be included in markdown `json` block in the body of
 the commit message using provided function
 
