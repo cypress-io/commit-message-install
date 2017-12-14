@@ -52,6 +52,14 @@ Happy installation
 **note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a
 list of several platforms like `darwin,linux`
 
+### Specific commit
+
+You can install using commit message from a specific commit (not the current one)
+
+```shell
+$ $(npm bin)/commit-message-install --sha f81a00
+```
+
 ### Alternative command
 
 You can specify a command to run *if commit message has no JSON block*. For example you can
