@@ -1,8 +1,3 @@
-exports['commit-message-install getJsonFromGit extracts the json from git message 1'] = {
-  "platform": "win32",
-  "branch": "some-branch"
-}
-
 exports['commit-message-install gets last commit message returns just the body of the commit message 1'] = `
 message body
 `
@@ -134,4 +129,9 @@ exports['commit-message-install getJsonBlock returns first found json block 1'] 
 exports['commit-message-install getJsonBlock returns json with branch 1'] = {
   "foo": "bar",
   "branch": "test-branch"
+}
+
+exports['commit-message-install getJsonFromGit returns undefined without valid block 1'] = {
+  "platform": "win32",
+  "branch": "some-branch"
 }
