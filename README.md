@@ -99,14 +99,14 @@ the commit message using provided function
 
 ```js
 const {getInstallJson} = require('commit-message-install')
-// package(s), env, platform
-const json = getInstallJson('foo', {foo: 42}, 'linux')
+// package(s), env, platform, branch name (optional)
+const json = getInstallJson('foo', {foo: 42}, 'linux', 'test-branch')
 // returns an object
-// {platform: "linux", env: {foo: 42}, packages: "foo"}
+// {platform: "linux", env: {foo: 42}, packages: "foo", branch: "test-branch"}
 ```
 
-You can pass individual package name like `debug` or several as a single string `debug chalk`
-or a list `['debug', 'chalk']`
+You can pass individual package name like `debug` or several as a single string
+`debug chalk` or a list `['debug', 'chalk']`
 
 You can pass for platform either individual `os.platform()` or a "*"" for all, and even
 several platforms like `win32,linux` or `linux|darwin`.

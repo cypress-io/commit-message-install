@@ -114,3 +114,15 @@ exports['commit-message-install getJsonBlock finds single json block 1'] = {
 exports['commit-message-install getJsonBlock returns first found json block 1'] = {
   "foo": "bar"
 }
+
+exports['commit-message-install getInstallJson sets branch 1'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk",
+  "branch": "test-branch"
+}
+
+exports['commit-message-install getJsonBlock returns json with branch 1'] = {
+  "foo": "bar",
+  "branch": "test-branch"
+}

@@ -52,6 +52,10 @@ describe('commit-message-install', () => {
     it('sets several modules', () => {
       snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux'))
     })
+
+    it('sets branch', () => {
+      snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', 'test-branch'))
+    })
   })
 
   context('isPlatformAllowed', () => {
@@ -148,6 +152,22 @@ describe('commit-message-install', () => {
         "no": false
       }
       \`\`\`
+      `
+      const result = getJsonBlock(message)
+      la(is.object(result), 'result should be an object', result)
+      snapshot(result)
+    })
+
+    it('returns json with branch', () => {
+      const message = stripIndent`
+      some text
+      \`\`\`json
+      {
+        "foo": "bar",
+        "branch": "test-branch"
+      }
+      \`\`\`
+      then some other text
       `
       const result = getJsonBlock(message)
       la(is.object(result), 'result should be an object', result)

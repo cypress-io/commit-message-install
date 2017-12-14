@@ -167,7 +167,7 @@ function npmInstall (json) {
 }
 
 // forms JSON object that can be parsed later
-function getInstallJson (packages, env, platform) {
+function getInstallJson (packages, env, platform, branch) {
   if (!env) {
     env = {}
   }
@@ -190,6 +190,12 @@ function getInstallJson (packages, env, platform) {
     env,
     packages
   }
+  if (branch) {
+    la(is.unemptyString(branch), 'invalid branch name', branch)
+    debug('branch name', branch)
+    json.branch = branch
+  }
+
   la(
     isNpmInstall(json),
     'formed invalid json object',
