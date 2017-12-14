@@ -114,6 +114,8 @@ getJsonFromGit()
     })
 ```
 
+If there is no valid JSON object in the message, resolves with `undefined`.
+
 ### getInstallJson
 
 You can form good Json object to be included in markdown `json` block in the body of

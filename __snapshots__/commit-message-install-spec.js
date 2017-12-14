@@ -1,3 +1,16 @@
+exports['commit-message-install getJsonFromGit extracts the json from git message 1'] = {
+  "platform": "win32",
+  "branch": "some-branch"
+}
+
+exports['commit-message-install gets last commit message returns just the body of the commit message 1'] = `
+message body
+`
+
+exports['commit-message-install gets commit message for specific commit returns just the body of specific commit 1'] = `
+message body
+`
+
 exports['commit-message-install getInstallJson sets properties and all platforms 1'] = {
   "platform": "*",
   "env": {
@@ -20,9 +33,12 @@ exports['commit-message-install getInstallJson sets several modules 1'] = {
   "packages": "debug chalk"
 }
 
-exports['commit-message-install gets last commit message returns just the body of the commit message 1'] = `
-message body
-`
+exports['commit-message-install getInstallJson sets branch 1'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk",
+  "branch": "test-branch"
+}
 
 exports['commit-message-install isPlatformAllowed compares platforms isPlatformAllowed 1'] = {
   "name": "isPlatformAllowed",
@@ -115,23 +131,7 @@ exports['commit-message-install getJsonBlock returns first found json block 1'] 
   "foo": "bar"
 }
 
-exports['commit-message-install getInstallJson sets branch 1'] = {
-  "platform": "linux",
-  "env": {},
-  "packages": "debug chalk",
-  "branch": "test-branch"
-}
-
 exports['commit-message-install getJsonBlock returns json with branch 1'] = {
   "foo": "bar",
   "branch": "test-branch"
 }
-
-exports['commit-message-install getJsonFromGit extracts the json from git message 1'] = {
-  "platform": "win32",
-  "branch": "some-branch"
-}
-
-exports['commit-message-install gets commit message for specific commit returns just the body of specific commit 1'] = `
-message body
-`

@@ -43,26 +43,31 @@ describe('commit-message-install', () => {
   })
 
   context('getJsonFromGit', () => {
-    const message = `
-      below is test json block
-
-      \`\`\`json
-      {
-        "platform": "win32",
-        "branch": "some-branch"
-      }
-      \`\`\`
-    `
-    beforeEach(() => {
-      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
-    })
-
     it('is a function', () => {
       la(is.fn(getJsonFromGit))
     })
 
     it('extracts the json from git message', () => {
+      const message = `
+        below is test json block
+
+        \`\`\`json
+        {
+          "platform": "win32",
+          "branch": "some-branch"
+        }
+        \`\`\`
+      `
+      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
       getJsonFromGit().then(snapshot)
+    })
+
+    it('returns undefined without valid block', () => {
+      const message = 'this message has no json code'
+      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
+      getJsonFromGit().then(json => {
+        la(json === undefined, 'found json', json)
+      })
     })
   })
 
