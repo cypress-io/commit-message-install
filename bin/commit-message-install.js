@@ -22,9 +22,10 @@ function commitMessageInstall (cliArguments) {
 
   const args = require('minimist')(cliArguments, {
     alias: {
-      file: 'f'
+      file: 'f',
+      sha: 'commit'
     },
-    string: ['file', 'else']
+    string: ['file', 'else', 'sha']
   })
 
   let start
@@ -34,7 +35,7 @@ function commitMessageInstall (cliArguments) {
     const message = fs.readFileSync(args.file, 'utf8')
     start = Promise.resolve(message)
   } else {
-    start = getMessage()
+    start = getMessage(args.sha)
   }
   return start
     .then(getJsonBlock)

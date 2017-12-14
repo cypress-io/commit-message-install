@@ -9,9 +9,14 @@ const chalk = require('chalk')
 
 const prop = name => object => object[name]
 
-function getMessage () {
+function getMessage (sha) {
   debug('getting last git commit message body')
-  return execa.shell('git show -s --pretty=%b').then(prop('stdout'))
+  const currentMessageCommand = 'git show -s --pretty=%b'
+  const cmd = is.unemptyString(sha)
+    ? currentMessageCommand + ' ' + sha
+    : currentMessageCommand
+  debug('git command "%s"', cmd)
+  return execa.shell(cmd).then(prop('stdout'))
 }
 
 // parses given commit message text (body)

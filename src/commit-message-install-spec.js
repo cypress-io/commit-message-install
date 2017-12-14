@@ -27,6 +27,21 @@ describe('commit-message-install', () => {
     })
   })
 
+  context('gets commit message for specific commit', () => {
+    const sha = '3d243ea'
+    beforeEach(() => {
+      const cmd = getMessageGitCommand + ' ' + sha
+      stubSpawnShellOnce(cmd, 0, 'message body', '')
+    })
+
+    it('returns just the body of specific commit', () => {
+      return getMessage(sha).then(x => {
+        la(is.unemptyString(x), 'invalid message format', x)
+        snapshot(x)
+      })
+    })
+  })
+
   context('getJsonFromGit', () => {
     const message = `
       below is test json block

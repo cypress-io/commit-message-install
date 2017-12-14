@@ -131,3 +131,7 @@ exports['commit-message-install getJsonFromGit extracts the json from git messag
   "platform": "win32",
   "branch": "some-branch"
 }
+
+exports['commit-message-install gets commit message for specific commit returns just the body of specific commit 1'] = `
+message body
+`
