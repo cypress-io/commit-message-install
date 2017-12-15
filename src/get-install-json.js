@@ -2,7 +2,7 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const os = require('os')
 const debug = require('debug')('commit-message-install')
-const { isNpmInstall } = require('./utils')
+const isNpmInstall = require('./utils').isNpmInstall
 
 // forms JSON object that can be parsed later
 function getInstallJson (packages, env, platform, branch, commit) {

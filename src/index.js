@@ -7,7 +7,7 @@ const os = require('os')
 const execa = require('execa')
 const chalk = require('chalk')
 const getInstallJson = require('./get-install-json')
-const { isNpmInstall } = require('./utils')
+const isNpmInstall = require('./utils').isNpmInstall
 
 const prop = name => object => object[name]
 
