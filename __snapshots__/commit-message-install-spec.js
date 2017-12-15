@@ -6,35 +6,6 @@ exports['commit-message-install gets commit message for specific commit returns 
 message body
 `
 
-exports['commit-message-install getInstallJson sets properties and all platforms 1'] = {
-  "platform": "*",
-  "env": {
-    "foo": 42
-  },
-  "packages": "debug"
-}
-
-exports['commit-message-install getInstallJson sets given platform 1'] = {
-  "platform": "linux",
-  "env": {
-    "foo": 42
-  },
-  "packages": "debug"
-}
-
-exports['commit-message-install getInstallJson sets several modules 1'] = {
-  "platform": "linux",
-  "env": {},
-  "packages": "debug chalk"
-}
-
-exports['commit-message-install getInstallJson sets branch 1'] = {
-  "platform": "linux",
-  "env": {},
-  "packages": "debug chalk",
-  "branch": "test-branch"
-}
-
 exports['commit-message-install isPlatformAllowed compares platforms isPlatformAllowed 1'] = {
   "name": "isPlatformAllowed",
   "behavior": [
@@ -131,7 +102,7 @@ exports['commit-message-install getJsonBlock returns json with branch 1'] = {
   "branch": "test-branch"
 }
 
-exports['commit-message-install getJsonFromGit returns undefined without valid block 1'] = {
+exports['commit-message-install getJsonFromGit extracts the json from git message 1'] = {
   "platform": "win32",
   "branch": "some-branch"
 }
