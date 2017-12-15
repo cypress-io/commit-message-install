@@ -124,9 +124,16 @@ the commit message using provided function
 ```js
 const {getInstallJson} = require('commit-message-install')
 // package(s), env, platform, branch name (optional)
-const json = getInstallJson('foo', {foo: 42}, 'linux', 'test-branch')
+const json = getInstallJson('foo',
+    {foo: 42}, 'linux', 'test-branch', 'b7ccfd8')
 // returns an object
-// {platform: "linux", env: {foo: 42}, packages: "foo", branch: "test-branch"}
+    // {
+    //   platform: "linux",
+    //   env: {foo: 42},
+    //   packages: "foo",
+    //   branch: "test-branch",
+    //   commit: "b7ccfd8"
+    // }
 ```
 
 You can pass individual package name like `debug` or several as a single string

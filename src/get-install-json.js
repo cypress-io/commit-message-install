@@ -5,7 +5,7 @@ const debug = require('debug')('commit-message-install')
 const { isNpmInstall } = require('./utils')
 
 // forms JSON object that can be parsed later
-function getInstallJson (packages, env, platform, branch) {
+function getInstallJson (packages, env, platform, branch, commit) {
   if (!env) {
     env = {}
   }
@@ -32,6 +32,14 @@ function getInstallJson (packages, env, platform, branch) {
     la(is.unemptyString(branch), 'invalid branch name', branch)
     debug('branch name', branch)
     json.branch = branch
+  }
+  if (commit) {
+    la(
+      is.commitId(commit) || is.shortCommitId(commit),
+      'invalid commit',
+      commit
+    )
+    json.commit = commit
   }
 
   la(

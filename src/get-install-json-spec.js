@@ -27,4 +27,8 @@ describe('getInstallJson', () => {
   it('sets branch', () => {
     snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', 'test-branch'))
   })
+
+  it('sets commit', () => {
+    snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', null, 'b7ccfd8'))
+  })
 })

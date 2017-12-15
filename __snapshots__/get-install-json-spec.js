@@ -26,3 +26,10 @@ exports['getInstallJson sets branch 1'] = {
   "packages": "debug chalk",
   "branch": "test-branch"
 }
+
+exports['getInstallJson sets commit 1'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk",
+  "commit": "b7ccfd8"
+}
