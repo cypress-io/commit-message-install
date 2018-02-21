@@ -142,6 +142,16 @@ You can pass individual package name like `debug` or several as a single string
 You can pass for platform either individual `os.platform()` or a "*"" for all, and even
 several platforms like `win32,linux` or `linux|darwin`.
 
+### npmInstall
+
+After getting JSON from a commit message you can install dependencies
+
+```js
+const {getInstallJson, npmInstall} = require('commit-message-install')
+getInstallJson()
+  .then(npmInstall)
+```
+
 ## Debugging
 
 - Run this tool with `DEBUG=commit-message-install` environment variable set
