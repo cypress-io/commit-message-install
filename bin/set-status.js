@@ -15,6 +15,7 @@ const hasStatusFields = is.schema({
   repo: is.unemptyString,
   sha: is.commitId
 })
+const isValidCommitState = is.oneOf(Object.keys(GitHub.StatusState))
 
 const allArgs = process.argv.slice(2)
 const args = require('minimist')(allArgs, {
@@ -65,6 +66,12 @@ start
       console.log(json.status)
       return
     }
+    const state = args.state || GitHub.StatusState.pending
+    if (!isValidCommitState(state)) {
+      console.error('invalid commit state "%s"', state)
+      console.error('only valid states are', Object.keys(GitHub.StatusState))
+      process.exit(1)
+    }
 
     console.log('got json block from the git commit message')
     console.log(JSON.stringify(json, null, 2))
@@ -81,17 +88,16 @@ start
     const params = GitHub.getFromEnvironment()
     const gh = GitHub.createGithubAppClient(params)
 
-    return GitHub.setCommitStatus(
-      {
-        owner: json.status.owner,
-        repo: json.status.repo,
-        sha: json.status.sha,
-        state: args.state,
-        description: args.description,
-        context: args.context,
-        targetUrl: args.url
-      },
-      gh
-    )
+    const options = {
+      owner: json.status.owner,
+      repo: json.status.repo,
+      sha: json.status.sha,
+      state: args.state,
+      description: args.description,
+      context: args.context,
+      targetUrl: args.url
+    }
+    debug('setting commit status %o', options)
+    return GitHub.setCommitStatus(options, gh)
   })
   .catch(onError)
