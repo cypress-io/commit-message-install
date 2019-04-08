@@ -20,7 +20,7 @@ script:
   - DEBUG=commit-message-install node ./bin/commit-message-install.js -f test/message.txt
   - npm run demo
 after_success:
-  - $(npm bin)/if-node-version ">=8" npm run semantic-release
+  - npm run semantic-release
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
