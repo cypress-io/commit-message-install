@@ -4,8 +4,14 @@ const os = require('os')
 const debug = require('debug')('commit-message-install')
 const isNpmInstall = require('./utils').isNpmInstall
 
+const isStatus = is.schema({
+  owner: is.unemptyString,
+  repo: is.unemptyString,
+  sha: is.commitId
+})
+
 // forms JSON object that can be parsed later
-function getInstallJson (packages, env, platform, branch, commit) {
+function getInstallJson (packages, env, platform, branch, commit, status) {
   if (!env) {
     env = {}
   }
@@ -40,6 +46,11 @@ function getInstallJson (packages, env, platform, branch, commit) {
       commit
     )
     json.commit = commit
+  }
+
+  if (status) {
+    la(isStatus(status), 'invalid status object', status)
+    json.status = status
   }
 
   la(

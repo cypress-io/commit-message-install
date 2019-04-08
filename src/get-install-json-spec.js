@@ -31,4 +31,13 @@ describe('getInstallJson', () => {
   it('sets commit', () => {
     snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', null, 'b7ccfd8'))
   })
+
+  it('sets status object', () => {
+    const status = {
+      owner: 'foo',
+      repo: 'bar',
+      sha: '2d8687c143165218c6b52a76018b76cf99137e48'
+    }
+    snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', null, null, status))
+  })
 })

@@ -33,3 +33,14 @@ exports['getInstallJson sets commit 1'] = {
   "packages": "debug chalk",
   "commit": "b7ccfd8"
 }
+
+exports['getInstallJson sets status object 1'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk",
+  "status": {
+    "owner": "foo",
+    "repo": "bar",
+    "sha": "2d8687c143165218c6b52a76018b76cf99137e48"
+  }
+}
