@@ -9,7 +9,7 @@ const toMarkdownJsonBlock = require('./utils').toMarkdownJsonBlock
 
 const la = require('lazy-ass')
 const is = require('check-more-types')
-const {stripIndent} = require('common-tags')
+const { stripIndent } = require('common-tags')
 const snapshot = require('snap-shot-it')
 const stubSpawnShellOnce = require('stub-spawn-once').stubSpawnShellOnce
 
