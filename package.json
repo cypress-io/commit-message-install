@@ -101,7 +101,7 @@
     "schema-shot": "1.9.0",
     "semantic-release": "8.2.0",
     "simple-commit-message": "3.3.1",
-    "snap-shot-it": "4.0.1",
+    "snap-shot-it": "6.3.2",
     "standard": "12.0.1",
     "stub-spawn-once": "2.3.0"
   },
