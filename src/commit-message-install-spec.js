@@ -4,10 +4,12 @@
 const getMessage = require('.').getMessage
 const getJsonBlock = require('.').getJsonBlock
 const getJsonFromGit = require('.').getJsonFromGit
+const getInstallJson = require('./get-install-json')
+const toMarkdownJsonBlock = require('./utils').toMarkdownJsonBlock
 
 const la = require('lazy-ass')
 const is = require('check-more-types')
-const stripIndent = require('common-tags').stripIndent
+const {stripIndent} = require('common-tags')
 const snapshot = require('snap-shot-it')
 const stubSpawnShellOnce = require('stub-spawn-once').stubSpawnShellOnce
 
@@ -62,10 +64,27 @@ describe('commit-message-install', () => {
       getJsonFromGit().then(snapshot)
     })
 
+    it('extracts formed json correctly', () => {
+      const status = {
+        owner: 'foo',
+        repo: 'bar',
+        sha: '2d8687c143165218c6b52a76018b76cf99137e48'
+      }
+      const info = getInstallJson(['debug', 'chalk'], {}, 'linux', null, null, status)
+      const json = toMarkdownJsonBlock(info)
+      const message = `some text\n\n` + json
+
+      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
+      return getJsonFromGit().then(json => {
+        snapshot(json)
+      })
+    })
+
     it('returns undefined without valid block', () => {
       const message = 'this message has no json code'
       stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
-      getJsonFromGit().then(json => {
+
+      return getJsonFromGit().then(json => {
         la(json === undefined, 'found json', json)
       })
     })
