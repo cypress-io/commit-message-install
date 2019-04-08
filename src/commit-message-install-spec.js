@@ -61,7 +61,7 @@ describe('commit-message-install', () => {
         \`\`\`
       `
       stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
-      getJsonFromGit().then(snapshot)
+      return getJsonFromGit().then(snapshot)
     })
 
     it('extracts formed json correctly', () => {
