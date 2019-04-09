@@ -1,4 +1,4 @@
-# commit-message-install
+# @cypress/commit-message-install
 
 > NPM install a package by name taken from the last commit message
 
@@ -29,7 +29,7 @@ custom installation. Then use this CLI tool to install based on the commit messa
 Example CI file command
 
 ```
-- npm i -g commit-message-install
+- npm i -g @cypress/commit-message-install
 - commit-message-install
 ```
 
@@ -108,7 +108,7 @@ steps:
 Extracts JSON block from the current Git message text
 
 ```js
-const {getJsonFromGit} = require('commit-message-install')
+const {getJsonFromGit} = require('@cypress/commit-message-install')
 getJsonFromGit()
     .then(json => {
         // {platform: 'win32', packages: 'foo', branch: 'test-branch'}
@@ -123,7 +123,7 @@ You can form good Json object to be included in markdown `json` block in the bod
 the commit message using provided function
 
 ```js
-const {getInstallJson} = require('commit-message-install')
+const {getInstallJson} = require('@cypress/commit-message-install')
 // package(s), env, platform, branch name (optional)
 const json = getInstallJson('foo',
     {foo: 42}, 'linux', 'test-branch', 'b7ccfd8')
@@ -148,7 +148,7 @@ several platforms like `win32,linux` or `linux|darwin`.
 After getting JSON from a commit message you can install dependencies
 
 ```js
-const {getInstallJson, npmInstall} = require('commit-message-install')
+const {getInstallJson, npmInstall} = require('@cypress/commit-message-install')
 getInstallJson()
   .then(npmInstall)
 ```
@@ -196,8 +196,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
-[npm-icon]: https://nodei.co/npm/commit-message-install.svg?downloads=true
-[npm-url]: https://npmjs.org/package/commit-message-install
+[npm-icon]: https://nodei.co/npm/@cypress/commit-message-install.svg?downloads=true
+[npm-url]: https://npmjs.org/package/@cypress/commit-message-install
 [ci-image]: https://travis-ci.org/cypress-io/commit-message-install.svg?branch=master
 [ci-url]: https://travis-ci.org/cypress-io/commit-message-install
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg

@@ -1,5 +1,5 @@
 {
-  "name": "commit-message-install",
+  "name": "@cypress/commit-message-install",
   "description": "NPM install a package by name taken from the last commit message",
   "version": "0.0.0-development",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
