@@ -76,6 +76,7 @@ function getJsonBlock (message) {
 
 const isRunIf = is.schema({
   platform: is.maybe.unemptyString,
+  arch: is.maybe.unemptyString,
   env: is.maybe.object
 })
 
@@ -89,6 +90,27 @@ function isPlatformAllowed (platform, osPlatform) {
   debug('checking platform, allowed platform is', platform)
   la(is.unemptyString(platform), 'invalid allowed platform', platform)
   return platform === '*' || platform.indexOf(osPlatform) !== -1
+}
+
+/**
+ * Returns true if the required architecture matches current OS architecture.
+ * If required architecture is undefined or "*", all are allowed.
+ *
+ * @param [string] required architecture, like "x64", "ia32" or "*"
+ * @param [string] current OS architecture
+ * @example
+ *  isArchAllowed(requiredArch, osArch)
+ */
+function isArchAllowed (arch, osArch) {
+  if (!osArch) {
+    osArch = os.arch()
+  }
+  if (!arch) {
+    return true
+  }
+  debug('checking arch, allowed arch is', arch)
+  la(is.unemptyString(arch), 'invalid allowed arch', arch)
+  return arch === '*' || arch.indexOf(osArch) !== -1
 }
 
 function clone (x) {
@@ -126,6 +148,15 @@ function runIf (command, json) {
   }
   console.log('Platform %s is allowed', chalk.green(osPlatform))
 
+  const osArch = os.arch()
+  if (!isArchAllowed(json.arch, osArch)) {
+    console.log('Required arch: %s', chalk.green(json.arch))
+    console.log('Current arch: %s', chalk.red(osArch))
+    console.log('skipping command ⏩  %s', command)
+    return Promise.resolve()
+  }
+  console.log('Arch %s is allowed', chalk.green(osArch))
+
   const options = {
     env: json.env,
     stdio: 'inherit'
@@ -148,6 +179,15 @@ function npmInstall (json) {
     return Promise.resolve()
   }
   console.log('Platform %s is allowed', chalk.green(osPlatform))
+
+  const osArch = os.arch()
+  if (!isArchAllowed(json.arch, osArch)) {
+    console.log('Required arch: %s', chalk.green(json.arch))
+    console.log('Current arch: %s', chalk.red(osArch))
+    console.log('skipping NPM install')
+    return Promise.resolve()
+  }
+  console.log('Arch %s is allowed', chalk.green(osArch))
 
   const env = json.env || {}
   console.log('installing', json.packages)
@@ -177,6 +217,7 @@ module.exports = {
   getCommand,
   runIf,
   isPlatformAllowed,
+  isArchAllowed,
   getJsonBlock,
   npmInstall,
   getInstallJson,

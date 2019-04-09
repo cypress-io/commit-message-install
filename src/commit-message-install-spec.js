@@ -133,6 +133,30 @@ describe('commit-message-install', () => {
     })
   })
 
+  context('isArchAllowed', () => {
+    const { isArchAllowed } = require('.')
+
+    it('is a function', () => {
+      la(is.fn(isArchAllowed))
+    })
+
+    it('compares arch', () => {
+      snapshot(
+        isArchAllowed,
+        // required, detected
+        ['x64', 'x64'], // allowed
+        [undefined, 'x64'], // allowed
+        ['*', 'x64'], // allowed
+        [undefined, undefined], // allowed
+        ['ia32,x64', 'ia32'], // allowed
+        ['ia32,x64', 'x64'], // allowed
+        ['ia32,x64', undefined], // allowed
+        ['ia32', 'x64'], // not allowed
+        ['x64', 'ia32'] // not allowed
+      )
+    })
+  })
+
   context('getCommand', () => {
     const getCommand = require('.').getCommand
 
