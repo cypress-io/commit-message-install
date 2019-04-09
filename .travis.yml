@@ -1,19 +1,17 @@
 language: node_js
 cache:
   directories:
-    - node_modules
+    - ~/.npm
 notifications:
   email: true
 node_js:
   - '8'
-before_script:
-  - npm prune
 script:
   # check syntax of the script
   - node --check bin/commit-message-install.js
   - node --check bin/commit-message-run.js
   - node --check .
-  - $(npm bin)/if-node-version ">=6" npm test
+  - npm test
   - DEBUG=commit-message-install node ./bin/commit-message-install.js
   - DEBUG=commit-message-install node ./bin/commit-message-install.js --else "echo --else is working"
   # synthetic test case
