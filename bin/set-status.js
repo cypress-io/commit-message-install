@@ -13,7 +13,8 @@ const is = require('check-more-types')
 const hasStatusFields = is.schema({
   owner: is.unemptyString,
   repo: is.unemptyString,
-  sha: is.commitId
+  sha: is.commitId,
+  context: is.unemptyString
 })
 const isValidCommitState = is.oneOf(Object.keys(GitHub.StatusState))
 
@@ -31,10 +32,6 @@ const args = require('minimist')(allArgs, {
 const api = require('..')
 const getMessage = api.getMessage
 const getJsonBlock = api.getJsonBlock
-// const getCommand = api.getCommand
-
-// const actualCommand = getCommand(allArgs)
-// debug('command to run:', actualCommand)
 
 function onError (e) {
   console.error(e)
@@ -94,7 +91,7 @@ start
       sha: json.status.sha,
       state: args.state,
       description: args.description,
-      context: args.context,
+      context: args.context || json.status.context,
       targetUrl: args.url
     }
     debug('setting commit status %o', options)

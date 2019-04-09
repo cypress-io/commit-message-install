@@ -68,9 +68,17 @@ describe('commit-message-install', () => {
       const status = {
         owner: 'foo',
         repo: 'bar',
-        sha: '2d8687c143165218c6b52a76018b76cf99137e48'
+        sha: '2d8687c143165218c6b52a76018b76cf99137e48',
+        context: 'testing'
       }
-      const info = getInstallJson(['debug', 'chalk'], {}, 'linux', null, null, status)
+      const info = getInstallJson(
+        ['debug', 'chalk'],
+        {},
+        'linux',
+        null,
+        null,
+        status
+      )
       const json = toMarkdownJsonBlock(info)
       const message = `some text\n\n` + json
 
