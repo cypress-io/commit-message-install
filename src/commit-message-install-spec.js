@@ -77,12 +77,14 @@ describe('commit-message-install', () => {
         status
       }
       const info = getInstallJson(options)
+      snapshot('formed json object', info)
+
       const json = toMarkdownJsonBlock(info)
       const message = `some text\n\n` + json
 
       stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
       return getJsonFromGit().then(json => {
-        snapshot(json)
+        snapshot('parsed back message', json)
       })
     })
 

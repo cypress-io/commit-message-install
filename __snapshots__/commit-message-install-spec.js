@@ -46,17 +46,6 @@ exports['commit-message-install getJsonBlock returns json with branch 1'] = {
   "branch": "test-branch"
 }
 
-exports['commit-message-install getJsonFromGit extracts formed json correctly 1'] = {
-  "platform": "linux",
-  "env": {},
-  "packages": "debug chalk",
-  "status": {
-    "owner": "foo",
-    "repo": "bar",
-    "sha": "2d8687c143165218c6b52a76018b76cf99137e48"
-  }
-}
-
 exports['commit-message-install getJsonFromGit extracts the json from git message 1'] = {
   "platform": "win32",
   "branch": "some-branch"
@@ -116,4 +105,26 @@ exports['commit-message-install isPlatformAllowed compares platforms isPlatformA
       "expect": true
     }
   ]
+}
+
+exports['formed json object'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk",
+  "status": {
+    "owner": "foo",
+    "repo": "bar",
+    "sha": "2d8687c143165218c6b52a76018b76cf99137e48"
+  }
+}
+
+exports['parsed back message'] = {
+  "platform": "linux",
+  "env": {},
+  "packages": "debug chalk",
+  "status": {
+    "owner": "foo",
+    "repo": "bar",
+    "sha": "2d8687c143165218c6b52a76018b76cf99137e48"
+  }
 }
