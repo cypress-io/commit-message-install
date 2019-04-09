@@ -7,7 +7,8 @@ const isNpmInstall = require('./utils').isNpmInstall
 const isStatus = is.schema({
   owner: is.unemptyString,
   repo: is.unemptyString,
-  sha: is.commitId
+  sha: is.commitId,
+  context: is.unemptyString
 })
 
 // forms JSON object that can be parsed later
