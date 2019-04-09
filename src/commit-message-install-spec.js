@@ -83,8 +83,8 @@ describe('commit-message-install', () => {
       const message = `some text\n\n` + json
 
       stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
-      return getJsonFromGit().then(json => {
-        snapshot('parsed back message', json)
+      return getJsonFromGit().then(extracted => {
+        snapshot('parsed back message', extracted)
       })
     })
 

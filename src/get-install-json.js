@@ -43,6 +43,7 @@ function getInstallJson ({
 
   const json = {
     platform,
+    arch,
     env,
     packages
   }
