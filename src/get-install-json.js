@@ -19,7 +19,7 @@ function getInstallJson ({
   branch,
   commit,
   status
-}) {
+} = {}) {
   if (!env) {
     env = {}
   }
@@ -73,6 +73,9 @@ function getInstallJson ({
     'from arguments',
     arguments
   )
+
+  debug('formed install json object %o', json)
+
   return json
 }
 
