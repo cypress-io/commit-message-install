@@ -11,13 +11,25 @@ const isStatus = is.schema({
 })
 
 // forms JSON object that can be parsed later
-function getInstallJson (packages, env, platform, branch, commit, status) {
+function getInstallJson ({
+  packages,
+  env,
+  platform,
+  arch,
+  branch,
+  commit,
+  status
+}) {
   if (!env) {
     env = {}
   }
   if (!platform) {
     platform = os.platform()
   }
+  if (!arch) {
+    arch = os.arch()
+  }
+
   la(
     is.unemptyString(packages) || is.strings(packages),
     'invalid package / list of packages',

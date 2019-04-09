@@ -13,23 +13,47 @@ describe('getInstallJson', () => {
   })
 
   it('sets properties and all platforms', () => {
-    snapshot(getInstallJson('debug', { foo: 42 }, '*'))
+    const json = { packages: 'debug', env: { foo: 42 }, platform: '*' }
+    snapshot(getInstallJson(json))
   })
 
   it('sets given platform', () => {
-    snapshot(getInstallJson('debug', { foo: 42 }, 'linux'))
+    const json = {
+      packages: 'debug',
+      env: { foo: 42 },
+      platform: 'linux'
+    }
+    snapshot(getInstallJson(json))
   })
 
   it('sets several modules', () => {
-    snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux'))
+    const json = {
+      packages: ['debug', 'chalk'],
+      env: {},
+      platform: 'linux'
+    }
+    snapshot(getInstallJson(json))
   })
 
   it('sets branch', () => {
-    snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', 'test-branch'))
+    const json = {
+      packages: ['debug', 'chalk'],
+      env: {},
+      platform: 'linux',
+      branch: 'test-branch'
+    }
+    snapshot(getInstallJson(json))
   })
 
   it('sets commit', () => {
-    snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', null, 'b7ccfd8'))
+    const json = {
+      packages: ['debug', 'chalk'],
+      env: {},
+      platform: 'linux',
+      branch: null,
+      commit: 'b7ccfd8'
+    }
+    snapshot(getInstallJson(json))
   })
 
   it('sets status object', () => {
@@ -38,6 +62,12 @@ describe('getInstallJson', () => {
       repo: 'bar',
       sha: '2d8687c143165218c6b52a76018b76cf99137e48'
     }
-    snapshot(getInstallJson(['debug', 'chalk'], {}, 'linux', null, null, status))
+    const json = {
+      packages: ['debug', 'chalk'],
+      env: {},
+      platform: 'linux',
+      status
+    }
+    snapshot(getInstallJson(json))
   })
 })

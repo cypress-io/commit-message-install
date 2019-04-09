@@ -43,6 +43,7 @@ The install will happen on all platforms
     ```json
     {
         "platform": "*",
+        "architecture": "x64",
         "packages": "debug,chalk"
     }
     ```
@@ -50,8 +51,7 @@ The install will happen on all platforms
 Happy installation
 ```
 
-**note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a
-list of several platforms like `darwin,linux`
+**note** `platform` can be `*` or specific one like `darwin` (from Node `os.platform()`) or a list of several platforms like `darwin,linux`. `architecture` is usually 64 bit `x64` as returned by `os.arch()`.
 
 ### Specific commit
 
