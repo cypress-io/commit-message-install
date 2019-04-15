@@ -7,7 +7,8 @@
   "bin": {
     "commit-message-install": "bin/commit-message-install.js",
     "cmi": "bin/commit-message-install.js",
-    "run-if": "bin/commit-message-run.js"
+    "run-if": "bin/commit-message-run.js",
+    "set-status": "bin/set-commit-status.js"
   },
   "config": {
     "pre-git": {
@@ -69,7 +70,8 @@
     "test": "npm run unit",
     "unit": "mocha src/*-spec.js",
     "semantic-release": "semantic-release",
-    "demo": "node bin/commit-message-run.js -f test/run-if.txt echo Foo is \\$FOO"
+    "demo": "node bin/commit-message-run.js -f test/run-if.txt echo Foo is \\$FOO",
+    "demo-status": "node bin/set-commit-status.js -f test/status.txt --state success --description \"just demo\""
   },
   "devDependencies": {
     "ban-sensitive-files": "1.9.0",
@@ -89,6 +91,7 @@
     "stub-spawn-once": "2.3.0"
   },
   "dependencies": {
+    "@cypress/set-commit-status": "1.1.0",
     "chalk": "2.4.2",
     "check-more-types": "2.24.0",
     "debug": "4.1.1",
