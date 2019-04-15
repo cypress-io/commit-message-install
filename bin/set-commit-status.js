@@ -3,6 +3,8 @@
 'use strict'
 
 const debug = require('debug')('commit-message-install')
+const os = require('os')
+const path = require('path')
 
 const allArgs = process.argv.slice(2)
 const args = require('minimist')(allArgs, {
@@ -45,6 +47,11 @@ start
     if (!status) {
       debug('could not find status object in the block %o', json)
       return
+    }
+
+    if (!args.label) {
+      const name = require(path.join(process.cwd(), 'package.json')).name
+      args.label = `${os.platform()}-${os.arch()} ${name}`
     }
 
     return setCommitStatus(args.label, args.state, args.description, status)
