@@ -8,9 +8,10 @@ const allArgs = process.argv.slice(2)
 const args = require('minimist')(allArgs, {
   alias: {
     file: 'f',
-    sha: 'commit'
+    sha: 'commit',
+    description: 'd'
   },
-  string: ['file', 'sha', 'state', 'label']
+  string: ['file', 'sha', 'state', 'label', 'description']
 })
 
 const api = require('..')
@@ -46,6 +47,6 @@ start
       return
     }
 
-    return setCommitStatus(args.label, args.state, status)
+    return setCommitStatus(args.label, args.state, args.description, status)
   })
   .catch(onError)

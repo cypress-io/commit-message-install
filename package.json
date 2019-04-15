@@ -71,7 +71,7 @@
     "unit": "mocha src/*-spec.js",
     "semantic-release": "semantic-release",
     "demo": "node bin/commit-message-run.js -f test/run-if.txt echo Foo is \\$FOO",
-    "demo-status": "node bin/set-commit-status.js -f test/status.txt --label \"linux-x64 cypress-test-tiny\" --state success"
+    "demo-status": "node bin/set-commit-status.js -f test/status.txt --label \"linux-x64 cypress-test-tiny\" --state success --description \"just demo\""
   },
   "devDependencies": {
     "ban-sensitive-files": "1.9.0",
