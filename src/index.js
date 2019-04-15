@@ -8,6 +8,7 @@ const execa = require('execa')
 const chalk = require('chalk')
 const getInstallJson = require('./get-install-json')
 const isNpmInstall = require('./utils').isNpmInstall
+const scs = require('@cypress/set-commit-status').setCommitStatus
 
 const prop = name => object => object[name]
 
@@ -135,6 +136,29 @@ function getCommand (args) {
   return command
 }
 
+function setCommitStatus (label, state, status) {
+  la(is.unemptyString(label), 'missing label to put into the context', label)
+
+  const isValidState = is.oneOf(['error', 'pending', 'failure', 'success'])
+  la(isValidState(state), 'invalid commit state to set', state)
+
+  const context = label
+  console.log('setting status for commit %s', status.sha)
+  console.log('context: %s', context)
+  console.log('state: %s', state)
+
+  const options = {
+    owner: status.owner,
+    repo: status.repo,
+    sha: status.sha,
+    state,
+    context
+  }
+
+  debug('setting commit status %o', options)
+  return scs(options)
+}
+
 function runIf (command, json) {
   la(is.unemptyString(command), 'missing command to run', command)
   la(isRunIf(json), 'invalid runIf json', json)
@@ -221,5 +245,6 @@ module.exports = {
   getJsonBlock,
   npmInstall,
   getInstallJson,
-  getJsonFromGit
+  getJsonFromGit,
+  setCommitStatus
 }

@@ -101,6 +101,16 @@ steps:
   - run: DEBUG=cypress:cli $(npm bin)/run-if $(npm bin)/cypress verify
 ```
 
+### Set GitHub commit status
+
+Very useful to notify other projects asynchronously via GitHub commit states.
+
+```text
+$(npm bin)/set-status --label "context label" --state success
+```
+
+State can be "error", "pending", "failure" or "success".
+
 ## API
 
 ### getJsonFromGit
