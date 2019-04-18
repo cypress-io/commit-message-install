@@ -3,8 +3,6 @@
 'use strict'
 
 const debug = require('debug')('commit-message-install')
-const os = require('os')
-const path = require('path')
 
 const allArgs = process.argv.slice(2)
 const args = require('minimist')(allArgs, {
@@ -49,11 +47,10 @@ start
       return
     }
 
-    if (!args.label) {
-      const name = require(path.join(process.cwd(), 'package.json')).name
-      args.label = `${os.platform()}-${os.arch()} ${name}`
+    if (!status.context) {
+      throw new Error('missing "context" property on status object')
     }
 
-    return setCommitStatus(args.label, args.state, args.description, status)
+    return setCommitStatus(args.state, args.description, status)
   })
   .catch(onError)

@@ -136,14 +136,13 @@ function getCommand (args) {
   return command
 }
 
-function setCommitStatus (label, state, description, status) {
-  la(is.unemptyString(label), 'missing label to put into the context', label)
+function setCommitStatus (state, description, status) {
   la(is.maybe.unemptyString(description), 'invalid description', description)
 
   const isValidState = is.oneOf(['error', 'pending', 'failure', 'success'])
   la(isValidState(state), 'invalid commit state to set', state)
 
-  const context = label
+  const context = status.context
   console.log('setting status for commit %s', status.sha)
   console.log('context: %s', context)
   console.log('state: %s', state)
