@@ -11,7 +11,7 @@ const args = require('minimist')(allArgs, {
     sha: 'commit',
     description: 'd'
   },
-  string: ['file', 'sha', 'state', 'label', 'description']
+  string: ['file', 'sha', 'state', 'label', 'description', 'url']
 })
 
 const api = require('..')
@@ -51,6 +51,6 @@ start
       throw new Error('missing "context" property on status object')
     }
 
-    return setCommitStatus(args.state, args.description, status)
+    return setCommitStatus(args.state, args.description, status, args.url)
   })
   .catch(onError)

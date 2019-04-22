@@ -136,7 +136,7 @@ function getCommand (args) {
   return command
 }
 
-function setCommitStatus (state, description, status) {
+function setCommitStatus (state, description, status, targetUrl) {
   la(is.maybe.unemptyString(description), 'invalid description', description)
 
   const isValidState = is.oneOf(['error', 'pending', 'failure', 'success'])
@@ -146,15 +146,19 @@ function setCommitStatus (state, description, status) {
   console.log('setting status for commit %s', status.sha)
   console.log('context: %s', context)
   console.log('state: %s', state)
+  if (targetUrl) {
+    console.log('target url: %s', targetUrl)
+    la(is.webUrl(targetUrl), 'expected target url, got', targetUrl)
+  }
 
-  // TODO: pass targetUrl
   const options = {
     owner: status.owner,
     repo: status.repo,
     sha: status.sha,
     state,
     context,
-    description
+    description,
+    targetUrl
   }
 
   debug('setting commit status %o', options)
