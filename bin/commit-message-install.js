@@ -49,7 +49,7 @@ function commitMessageInstall (cliArguments) {
             stdio: 'inherit',
             shell: true
           }
-          return utils.callExeca(args.else, options)
+          return utils.callExeca(args.else, [], options)
         }
         return
       }

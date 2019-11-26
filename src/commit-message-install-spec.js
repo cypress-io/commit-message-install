@@ -20,7 +20,7 @@ describe.only('commit-message-install', () => {
 
   context('gets last commit message', () => {
     beforeEach(() => {
-      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, [], { shell: true }).resolves({
         exitCode: 0,
         stdout: 'message body',
         stderr: ''
@@ -40,7 +40,7 @@ describe.only('commit-message-install', () => {
     const sha = '3d243ea'
     beforeEach(() => {
       const cmd = getMessageGitCommand + ' ' + sha
-      sandbox.stub(utils, 'callExeca').withArgs(cmd, { shell: true }).resolves({
+      sandbox.stub(utils, 'callExeca').withArgs(cmd, [], { shell: true }).resolves({
         exitCode: 0,
         stdout: 'message body',
         stderr: ''
@@ -71,7 +71,7 @@ describe.only('commit-message-install', () => {
         }
         \`\`\`
       `
-      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, [], { shell: true }).resolves({
         exitCode: 0,
         stdout: message,
         stderr: ''
@@ -97,7 +97,7 @@ describe.only('commit-message-install', () => {
       const json = toMarkdownJsonBlock(info)
       const message = `some text\n\n` + json
 
-      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, [], { shell: true }).resolves({
         exitCode: 0,
         stdout: message,
         stderr: ''
@@ -110,7 +110,7 @@ describe.only('commit-message-install', () => {
 
     it('returns undefined without valid block', () => {
       const message = 'this message has no json code'
-      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, [], { shell: true }).resolves({
         exitCode: 0,
         stdout: message,
         stderr: ''
@@ -126,11 +126,11 @@ describe.only('commit-message-install', () => {
     const commitMessageInstall = require('../bin/commit-message-install')
 
     beforeEach(() => {
-      sandbox.stub(utils, 'callExeca').withArgs('git show -s --pretty=%b', { shell: true }).resolves({
+      sandbox.stub(utils, 'callExeca').withArgs('git show -s --pretty=%b', [], { shell: true }).resolves({
         exitCode: 0,
         stdout: 'nothing to do',
         stderr: ''
-      }).withArgs('echo cool', { shell: true, stdio: 'inherit' }).resolves({
+      }).withArgs('echo cool', [], { shell: true, stdio: 'inherit' }).resolves({
         exitCode: 0,
         stdout: 'cool is working',
         stderr: ''

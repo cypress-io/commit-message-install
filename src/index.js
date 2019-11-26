@@ -1,4 +1,5 @@
 'use strict'
+// @ts-check
 
 const debug = require('debug')('commit-message-install')
 const la = require('lazy-ass')
@@ -18,7 +19,7 @@ function getMessage (sha) {
     ? currentMessageCommand + ' ' + sha
     : currentMessageCommand
   debug('git command "%s"', cmd)
-  return utils.callExeca(cmd, { shell: true }).then(prop('stdout'))
+  return utils.callExeca(cmd, [], { shell: true }).then(prop('stdout'))
 }
 
 // parses given commit message text (body)
@@ -191,7 +192,7 @@ function runIf (command, json) {
     stdio: 'inherit',
     shell: true
   }
-  return utils.callExeca(command, options)
+  return utils.callExeca(command, [], options)
 }
 
 function npmInstall (json) {

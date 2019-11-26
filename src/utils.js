@@ -33,11 +33,16 @@ const toMarkdownJsonBlock = object => {
 }
 
 /**
- * Little utility function to make stubbing "execa" easier
-*/
-const callExeca = (cmd, options = {}) => {
+ * Little utility function to make stubbing "execa" easier.
+ * @param {string} cmd Command to run
+ * @param {readonly string[]} args List of arguments
+ * @param {object} options Child process options
+ */
+const callExeca = (cmd, args, options) => {
   la(is.unemptyString(cmd), 'missing command to execute', cmd)
-  return execa(cmd, options)
+  la(is.strings(args), 'arguments should be a list of string', args)
+  la(is.object(options), 'options should be an object', options)
+  return execa(cmd, args, options)
 }
 
 module.exports = {
