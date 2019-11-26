@@ -3,7 +3,7 @@
 'use strict'
 
 const debug = require('debug')('commit-message-install')
-const execa = require('execa')
+const utils = require('../src/utils')
 
 const api = require('..')
 const getMessage = api.getMessage
@@ -46,9 +46,10 @@ function commitMessageInstall (cliArguments) {
           debug('have --else command')
           debug(args.else)
           const options = {
-            stdio: 'inherit'
+            stdio: 'inherit',
+            shell: true
           }
-          return execa.shell(args.else, options)
+          return utils.callExeca(args.else, options)
         }
         return
       }

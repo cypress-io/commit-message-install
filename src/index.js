@@ -4,10 +4,9 @@ const debug = require('debug')('commit-message-install')
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const os = require('os')
-const execa = require('execa')
 const chalk = require('chalk')
 const getInstallJson = require('./get-install-json')
-const isNpmInstall = require('./utils').isNpmInstall
+const utils = require('./utils')
 const scs = require('@cypress/set-commit-status').setCommitStatus
 
 const prop = name => object => object[name]
@@ -19,7 +18,7 @@ function getMessage (sha) {
     ? currentMessageCommand + ' ' + sha
     : currentMessageCommand
   debug('git command "%s"', cmd)
-  return execa.shell(cmd).then(prop('stdout'))
+  return utils.callExeca(cmd, { shell: true }).then(prop('stdout'))
 }
 
 // parses given commit message text (body)
@@ -189,9 +188,10 @@ function runIf (command, json) {
 
   const options = {
     env: json.env,
-    stdio: 'inherit'
+    stdio: 'inherit',
+    shell: true
   }
-  return execa.shell(command, options)
+  return utils.callExeca(command, options)
 }
 
 function npmInstall (json) {
@@ -199,7 +199,7 @@ function npmInstall (json) {
     debug('missing json for npm install')
     return Promise.resolve()
   }
-  la(isNpmInstall(json), 'invalid JSON to install format', json)
+  la(utils.isNpmInstall(json), 'invalid JSON to install format', json)
 
   const osPlatform = os.platform()
   if (!isPlatformAllowed(json.platform, osPlatform)) {
@@ -230,10 +230,13 @@ function npmInstall (json) {
     console.log('npm install might not work!')
     console.log(json.packages)
   }
-  return execa('npm', ['install', json.packages], {
+
+  const args = ['install', json.packages]
+  const options = {
     env,
     stdio: 'inherit'
-  })
+  }
+  return utils.callExeca('npm', args, options)
 }
 
 // looks at the current Git message,

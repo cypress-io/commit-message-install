@@ -68,7 +68,7 @@
     "secure": "echo disabled nsp check",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "test": "npm run unit",
-    "unit": "mocha src/*-spec.js",
+    "unit": "mocha test/helper src/*-spec.js",
     "semantic-release": "semantic-release",
     "demo": "node bin/commit-message-run.js -f test/run-if.txt echo Foo is \\$FOO",
     "demo-status": "node bin/set-commit-status.js -f test/status.txt --state success --description \"just demo\""
@@ -86,16 +86,16 @@
     "prettier-standard": "7.0.3",
     "schema-shot": "1.9.0",
     "semantic-release": "15.13.12",
+    "sinon": "7.5.0",
     "snap-shot-it": "6.3.5",
-    "standard": "12.0.1",
-    "stub-spawn-once": "2.3.0"
+    "standard": "12.0.1"
   },
   "dependencies": {
     "@cypress/set-commit-status": "1.3.4",
     "chalk": "2.4.2",
     "check-more-types": "2.24.0",
     "debug": "4.1.1",
-    "execa": "0.11.0",
+    "execa": "3.4.0",
     "lazy-ass": "1.6.0",
     "minimist": "1.2.0"
   }

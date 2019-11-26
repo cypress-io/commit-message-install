@@ -1,5 +1,6 @@
 const is = require('check-more-types')
 const la = require('lazy-ass')
+const execa = require('execa')
 
 // to install multiple packages, use comma-separated list
 const isNpmInstall = is.schema({
@@ -31,8 +32,17 @@ const toMarkdownJsonBlock = object => {
   return toJsonCodeBlock(str)
 }
 
+/**
+ * Little utility function to make stubbing "execa" easier
+*/
+const callExeca = (cmd, options = {}) => {
+  la(is.unemptyString(cmd), 'missing command to execute', cmd)
+  return execa(cmd, options)
+}
+
 module.exports = {
   isNpmInstall,
   toJsonCodeBlock,
-  toMarkdownJsonBlock
+  toMarkdownJsonBlock,
+  callExeca
 }

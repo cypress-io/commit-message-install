@@ -1,6 +1,7 @@
 'use strict'
 
 /* eslint-env mocha */
+/* global sandbox */
 const getMessage = require('.').getMessage
 const getJsonBlock = require('.').getJsonBlock
 const getJsonFromGit = require('.').getJsonFromGit
@@ -11,18 +12,24 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const { stripIndent } = require('common-tags')
 const snapshot = require('snap-shot-it')
-const stubSpawnShellOnce = require('stub-spawn-once').stubSpawnShellOnce
+const utils = require('./utils')
+const debug = require('debug')('test')
 
-describe('commit-message-install', () => {
+describe.only('commit-message-install', () => {
   const getMessageGitCommand = 'git show -s --pretty=%b'
 
   context('gets last commit message', () => {
     beforeEach(() => {
-      stubSpawnShellOnce(getMessageGitCommand, 0, 'message body', '')
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+        exitCode: 0,
+        stdout: 'message body',
+        stderr: ''
+      })
     })
 
     it('returns just the body of the commit message', () => {
       return getMessage().then(x => {
+        debug('message is %o', x)
         la(is.unemptyString(x), 'invalid message format', x)
         snapshot(x)
       })
@@ -33,7 +40,11 @@ describe('commit-message-install', () => {
     const sha = '3d243ea'
     beforeEach(() => {
       const cmd = getMessageGitCommand + ' ' + sha
-      stubSpawnShellOnce(cmd, 0, 'message body', '')
+      sandbox.stub(utils, 'callExeca').withArgs(cmd, { shell: true }).resolves({
+        exitCode: 0,
+        stdout: 'message body',
+        stderr: ''
+      })
     })
 
     it('returns just the body of specific commit', () => {
@@ -60,7 +71,11 @@ describe('commit-message-install', () => {
         }
         \`\`\`
       `
-      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+        exitCode: 0,
+        stdout: message,
+        stderr: ''
+      })
       return getJsonFromGit().then(snapshot)
     })
 
@@ -82,7 +97,12 @@ describe('commit-message-install', () => {
       const json = toMarkdownJsonBlock(info)
       const message = `some text\n\n` + json
 
-      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+        exitCode: 0,
+        stdout: message,
+        stderr: ''
+      })
+
       return getJsonFromGit().then(extracted => {
         snapshot('parsed back message', extracted)
       })
@@ -90,7 +110,11 @@ describe('commit-message-install', () => {
 
     it('returns undefined without valid block', () => {
       const message = 'this message has no json code'
-      stubSpawnShellOnce(getMessageGitCommand, 0, message, '')
+      sandbox.stub(utils, 'callExeca').withArgs(getMessageGitCommand, { shell: true }).resolves({
+        exitCode: 0,
+        stdout: message,
+        stderr: ''
+      })
 
       return getJsonFromGit().then(json => {
         la(json === undefined, 'found json', json)
@@ -102,12 +126,20 @@ describe('commit-message-install', () => {
     const commitMessageInstall = require('../bin/commit-message-install')
 
     beforeEach(() => {
-      stubSpawnShellOnce('git show -s --pretty=%b', 0, 'nothing to do', '')
-      stubSpawnShellOnce('echo cool', 0, 'cool is working', '')
+      sandbox.stub(utils, 'callExeca').withArgs('git show -s --pretty=%b', { shell: true }).resolves({
+        exitCode: 0,
+        stdout: 'nothing to do',
+        stderr: ''
+      }).withArgs('echo cool', { shell: true, stdio: 'inherit' }).resolves({
+        exitCode: 0,
+        stdout: 'cool is working',
+        stderr: ''
+      })
     })
 
     it('executes --else command', () => {
       return commitMessageInstall(['--else', 'echo cool']).then(x => {
+        debug('got', x)
         la(x.stdout === 'cool is working')
       })
     })
