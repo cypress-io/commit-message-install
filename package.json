@@ -8,7 +8,8 @@
     "commit-message-install": "bin/commit-message-install.js",
     "cmi": "bin/commit-message-install.js",
     "run-if": "bin/commit-message-run.js",
-    "set-status": "bin/set-commit-status.js"
+    "set-status": "bin/set-commit-status.js",
+    "has-message": "bin/has-commit-message.js"
   },
   "config": {
     "pre-git": {

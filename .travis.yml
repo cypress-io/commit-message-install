@@ -10,6 +10,7 @@ script:
   # check syntax of the script
   - node --check bin/commit-message-install.js
   - node --check bin/commit-message-run.js
+  - node --check bin/has-commit-message.js
   - node --check .
   - npm test
   - DEBUG=commit-message-install node ./bin/commit-message-install.js
@@ -17,6 +18,9 @@ script:
   # synthetic test case
   - DEBUG=commit-message-install node ./bin/commit-message-install.js -f test/message.txt
   - npm run demo
+  # demo test has-commit-message
+  - ./bin/has-commit-message.js -f test/message.txt
+
 after_success:
   - npm run semantic-release
 branches:

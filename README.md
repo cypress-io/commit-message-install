@@ -119,6 +119,19 @@ $(npm bin)/set-status --label "context label" --state success --description "sho
 
 State can be "error", "pending", "failure" or "success". `--label` is optional, if not set, then the platform and the package name will be used.
 
+### Has commit message
+
+You can use script `has-message` to check if the last or a specific commit has JSON commit information block
+
+```text
+$(npm bin)/has-message
+$(npm bin)/has-message --sha f81a00
+```
+
+If there is a message in the commit's body the script will exit with code 0. Otherwise it will exit with code 1.
+
+See [commit-message-install-example](https://github.com/bahmutov/commit-message-install-example) repo for an example.
+
 ## API
 
 ### getJsonFromGit
