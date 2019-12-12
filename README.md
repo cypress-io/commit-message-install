@@ -130,7 +130,31 @@ $(npm bin)/has-message --sha f81a00
 
 If there is a message in the commit's body the script will exit with code 0. Otherwise it will exit with code 1.
 
-See [commit-message-install-example](https://github.com/bahmutov/commit-message-install-example) repo for an example.
+See [commit-message-install-example](https://github.com/bahmutov/commit-message-install-example) repo for an example. Here is CircleCI halting if there is no commit message JSON
+
+```yml
+# install tool locally
+- run: npm install @cypress/commit-message-install
+- run: |
+    if ! $(npm bin)/has-message; then
+        echo Stopping early, no commit message
+        circleci-agent step halt
+    else
+        echo All good, found commit message JSON
+    fi
+```
+
+```yml
+# install tool globally using Yarn
+- run: yarn global @cypress/commit-message-install
+- run: |
+    if ! has-message; then
+        echo Stopping early, no commit message
+        circleci-agent step halt
+    else
+        echo All good, found commit message JSON
+    fi
+```
 
 ## API
 
