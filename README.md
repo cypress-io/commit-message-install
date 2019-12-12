@@ -14,7 +14,15 @@
 Requires [Node](https://nodejs.org/en/) version 6 or above.
 
 ```sh
-npm install --save-dev commit-message-install
+npm install --save-dev @cypress/commit-message-install
+yarn add -D @cypress/commit-message-install
+```
+
+or globally
+
+```sh
+npm i -g @cypress/commit-message-install
+yarn global @cypress/commit-message-install
 ```
 
 ## Use
