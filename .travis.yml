@@ -6,8 +6,8 @@ notifications:
   email: true
 node_js:
   - '8.0.0'
-before_install:
-  - npm i -g npm@latest
+install:
+  - npm install
 script:
   # check syntax of the script
   - node --check bin/commit-message-install.js
