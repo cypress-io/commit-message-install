@@ -5,7 +5,7 @@ cache:
 notifications:
   email: true
 node_js:
-  - '8'
+  - '8.0.0'
 script:
   # check syntax of the script
   - node --check bin/commit-message-install.js
