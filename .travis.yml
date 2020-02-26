@@ -23,8 +23,13 @@ script:
   # demo test has-commit-message
   - ./bin/has-commit-message.js -f test/message.txt
 
-after_success:
-  - npm run semantic-release
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+
+jobs:
+  include:
+    - stage: npm release
+      if: branch = master
+      node_js: '12' # required for semantic release
+      script: npm run semantic-release
