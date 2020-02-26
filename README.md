@@ -25,6 +25,10 @@ npm i -g @cypress/commit-message-install
 yarn global @cypress/commit-message-install
 ```
 
+### Node version
+
+We are trying to use the same minimum version of Node as Cypress
+
 ## Use
 
 ### Install NPM package from commit message
