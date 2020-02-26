@@ -4,32 +4,36 @@ cache:
     - ~/.npm
 notifications:
   email: true
-node_js:
-  - '8.0.0'
 install:
   - npm install
-script:
-  # check syntax of the script
-  - node --check bin/commit-message-install.js
-  - node --check bin/commit-message-run.js
-  - node --check bin/has-commit-message.js
-  - node --check .
-  - npm test
-  - DEBUG=commit-message-install node ./bin/commit-message-install.js
-  - DEBUG=commit-message-install node ./bin/commit-message-install.js --else "echo --else is working"
-  # synthetic test case
-  - DEBUG=commit-message-install node ./bin/commit-message-install.js -f test/message.txt
-  - npm run demo
-  # demo test has-commit-message
-  - ./bin/has-commit-message.js -f test/message.txt
-
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
 
+stages:
+  - test
+  - name: npm release
+    if: branch = master
+
 jobs:
   include:
+    - stage: test
+      node_js: '8.0.0'
+      script:
+        # check syntax of the script
+        - node --check bin/commit-message-install.js
+        - node --check bin/commit-message-run.js
+        - node --check bin/has-commit-message.js
+        - node --check .
+        - npm test
+        - DEBUG=commit-message-install node ./bin/commit-message-install.js
+        - DEBUG=commit-message-install node ./bin/commit-message-install.js --else "echo --else is working"
+        # synthetic test case
+        - DEBUG=commit-message-install node ./bin/commit-message-install.js -f test/message.txt
+        - npm run demo
+        # demo test has-commit-message
+        - ./bin/has-commit-message.js -f test/message.txt
+
     - stage: npm release
-      if: branch = master
       node_js: '12' # required for semantic release
       script: npm run semantic-release
