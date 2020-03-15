@@ -98,6 +98,6 @@
     "debug": "4.1.1",
     "execa": "1.0.0",
     "lazy-ass": "1.6.0",
-    "minimist": "1.2.0"
+    "minimist": "1.2.2"
   }
 }
